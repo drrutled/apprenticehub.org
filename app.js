@@ -162,8 +162,8 @@ const tradeRoute = /^#trade\/([a-z-]+)(?:\/([a-z]+))?$/;
 function parseRoute() {
   const match = window.location.hash.match(tradeRoute);
   const trade = match && trades.find((item) => item.id === match[1]);
-  const isSheetMetal = trade && trade.id === "sheet-metal";
-  const section = isSheetMetal && sheetMetalSections.some((s) => s.id === match[2]) ? match[2] : "overview";
+  const pack = trade && tradePacks[trade.id];
+  const section = pack && pack.sections.some((s) => s.id === match[2]) ? match[2] : "overview";
   return { trade, section };
 }
 
@@ -181,22 +181,24 @@ function renderDetail(trade, section = "overview") {
     externalLink(nationalResources.redSeal, "Red Seal Program", "Learn how Red Seal certification works and which trades are designated.")
   ].join("");
 
-  const isSheetMetal = trade.id === "sheet-metal";
-  const subNav = isSheetMetal ? `<nav class="sub-nav" aria-label="Sheet Metal Worker sections">${sheetMetalSections.map((s) =>
-    `<a href="#trade/sheet-metal${s.id === "overview" ? "" : `/${s.id}`}"${s.id === section ? ' aria-current="page"' : ""}>${s.label}</a>`).join("")}</nav>` : "";
-  const tiles = isSheetMetal ? `<div class="tile-grid" aria-label="Sheet Metal Worker toolkit">${[
+  const pack = useTrade(trade.id);
+  const isSheetMetal = Boolean(pack);
+  const base = `#trade/${trade.id}`;
+  const subNav = isSheetMetal ? `<nav class="sub-nav" aria-label="${trade.name} sections">${pack.sections.map((s) =>
+    `<a href="${base}${s.id === "overview" ? "" : `/${s.id}`}"${s.id === section ? ' aria-current="page"' : ""}>${s.label}</a>`).join("")}</nav>` : "";
+  const tiles = isSheetMetal ? `<div class="tile-grid" aria-label="${trade.name} toolkit">${[
     ["roadmap", "Roadmap", "Year-by-year checklist to certification"],
     ["tools", "Buying tools", "Pro-grade tools and school supplies"],
-    ["practice", "Practice tests", "73 questions and a mock Red Seal-style exam"],
+    ["practice", "Practice tests", `${Object.values(pack.practiceBank).flat().length} questions and a mock Red Seal-style exam`],
     ["flashcards", "Flashcards", "Glossary terms and formulas"],
     ["reference", "Reference", "Formulas, gauge table, glossary"],
     ["forum", "Forum and buy & sell", "Ask questions and trade gear locally"]
-  ].map(([id, title, text]) => `<a class="tile" href="#trade/sheet-metal/${id}"><strong>${title}</strong><span>${text}</span><span class="tile-arrow" aria-hidden="true">→</span></a>`).join("")}</div>` : "";
+  ].map(([id, title, text]) => `<a class="tile" href="${base}/${id}"><strong>${title}</strong><span>${text}</span><span class="tile-arrow" aria-hidden="true">→</span></a>`).join("")}</div>` : "";
   const toolsAndMedia = isSheetMetal
-    ? `<section class="content-block"><h2>Tools and affiliate links</h2><p>See the <a href="#trade/sheet-metal/tools">Buying tools</a> guide. Some tool links may be affiliate links; they are always clearly disclosed there.</p></section>`
+    ? `<section class="content-block"><h2>Tools and affiliate links</h2><p>See the <a href="${base}/tools">Buying tools</a> guide. Some tool links may be affiliate links; they are always clearly disclosed there.</p></section>`
     : `<section class="content-block"><h2>Tools and affiliate links</h2><p>There are no affiliate links in this pilot. Tool recommendations are informational only; any future affiliate links will be clearly labelled.</p></section>`;
   const communityBlock = isSheetMetal
-    ? `<section class="content-block"><h2>Community and media</h2><p>Join the <a href="#trade/sheet-metal/forum">forum</a>, browse <a href="#trade/sheet-metal/learn">videos and audio</a>, or take a <a href="#trade/sheet-metal/practice">practice test</a>.</p></section>`
+    ? `<section class="content-block"><h2>Community and media</h2><p>Join the <a href="${base}/forum">forum</a>, browse <a href="${base}/learn">videos and audio</a>, or take a <a href="${base}/practice">practice test</a>.</p></section>`
     : `<section class="content-block"><h2>Community and media</h2><p>Trade forums, photo guides, and video or audio resources are planned next. This first version has no accounts, user uploads, or discussion boards.</p></section>`;
 
   detailContent.innerHTML = `
