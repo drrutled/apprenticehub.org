@@ -384,7 +384,7 @@ function smReference() {
         <li><strong>Triangulation:</strong> transitions such as square to round.</li>
       </ul></section>
     <section class="content-block"><h2>Glossary</h2>
-      <dl class="P.glossary">${P.glossary.map(([t, d]) => `<dt>${t}</dt><dd>${d}</dd>`).join("")}</dl></section>`;
+      <dl class="glossary">${P.glossary.map(([t, d]) => `<dt>${t}</dt><dd>${d}</dd>`).join("")}</dl></section>`;
 }
 
 function renderSheetMetalJobs() {
@@ -405,7 +405,7 @@ function renderSheetMetalFlashcards() {
   window.smwCards = shuffle(cards);
   return `
     <section class="content-block"><h2>Flashcards</h2>
-      <p>Tap the card to flip it. Use Next for a new card. Cards come from the P.glossary and formulas on the Reference tab.</p>
+      <p>Tap the card to flip it. Use Next for a new card. Cards come from the glossary and formulas on the Reference tab.</p>
       <button class="flashcard" id="flashcard" type="button" aria-live="polite"></button>
       <div class="forum-actions"><button class="quiz-start" id="card-prev" type="button">Previous</button><button class="quiz-submit" id="card-next" type="button">Next</button><span class="fine-print" id="card-count"></span></div>
     </section>`;
