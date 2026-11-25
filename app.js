@@ -157,7 +157,17 @@ function renderTrades() {
   tradeGrid.innerHTML = pilotCards + upcomingCards;
 }
 
-function renderDetail(trade) {
+const tradeRoute = /^#trade\/([a-z-]+)(?:\/([a-z]+))?$/;
+
+function parseRoute() {
+  const match = window.location.hash.match(tradeRoute);
+  const trade = match && trades.find((item) => item.id === match[1]);
+  const isSheetMetal = trade && trade.id === "sheet-metal";
+  const section = isSheetMetal && sheetMetalSections.some((s) => s.id === match[2]) ? match[2] : "overview";
+  return { trade, section };
+}
+
+function renderDetail(trade, section = "overview") {
   const province = provinceSelect.value;
   const tools = trade.tools.map((tool) => `<li>${tool}</li>`).join("");
   const jobQuery = encodeURIComponent(`${trade.jobSearch} ${province}`);
@@ -171,6 +181,16 @@ function renderDetail(trade) {
     externalLink(nationalResources.redSeal, "Red Seal Program", "Learn how Red Seal certification works and which trades are designated.")
   ].join("");
 
+  const isSheetMetal = trade.id === "sheet-metal";
+  const subNav = isSheetMetal ? `<nav class="sub-nav" aria-label="Sheet Metal Worker sections">${sheetMetalSections.map((s) =>
+    `<a href="#trade/sheet-metal${s.id === "overview" ? "" : `/${s.id}`}"${s.id === section ? ' aria-current="page"' : ""}>${s.label}</a>`).join("")}</nav>` : "";
+  const toolsAndMedia = isSheetMetal
+    ? `<section class="content-block"><h2>Tools and affiliate links</h2><p>See the <a href="#trade/sheet-metal/tools">Buying tools</a> guide. There are no affiliate links; any future affiliate links will be clearly labelled.</p></section>`
+    : `<section class="content-block"><h2>Tools and affiliate links</h2><p>There are no affiliate links in this pilot. Tool recommendations are informational only; any future affiliate links will be clearly labelled.</p></section>`;
+  const communityBlock = isSheetMetal
+    ? `<section class="content-block"><h2>Community and media</h2><p>Join the <a href="#trade/sheet-metal/forum">forum</a>, browse <a href="#trade/sheet-metal/learn">videos and audio</a>, or take a <a href="#trade/sheet-metal/practice">practice test</a>.</p></section>`
+    : `<section class="content-block"><h2>Community and media</h2><p>Trade forums, photo guides, and video or audio resources are planned next. This first version has no accounts, user uploads, or discussion boards.</p></section>`;
+
   detailContent.innerHTML = `
     <div class="detail-hero">
       <div>
@@ -181,7 +201,8 @@ function renderDetail(trade) {
       <div class="detail-art">${trade.icon}</div>
     </div>
     <div class="detail-region"><span>Selected location: <strong>${province}</strong>. Training length, entry requirements, grants, and certification can vary by province or territory.</span><a href="${nationalResources.provinces}" target="_blank" rel="noopener noreferrer">Find your local authority ↗</a></div>
-    <div class="facts-grid" aria-label="Apprenticeship overview">
+    ${subNav}
+    ${section !== "overview" ? `<div class="section-body">${renderSheetMetalSection(section)}</div>` : `<div class="facts-grid" aria-label="Apprenticeship overview">
       <div class="fact"><div class="fact-label">How training works</div><strong>Paid workplace learning plus technical instruction</strong></div>
       <div class="fact"><div class="fact-label">How long it takes</div><strong>${trade.duration}</strong><small>Typical estimate from Job Bank; local requirements vary.</small></div>
       <div class="fact"><div class="fact-label">Certification</div><strong>Ask your local authority about completion and Red Seal options</strong></div>
@@ -191,7 +212,7 @@ function renderDetail(trade) {
         <section class="content-block"><h2>What the work is like</h2><p>${trade.work}</p></section>
         <section class="content-block"><h2>Getting started</h2><ol class="steps-list"><li>Check entry requirements with your province or territory.</li><li>Look for an employer or union apprenticeship opportunity and ask about sponsorship.</li><li>Register your apprenticeship as required locally; combine supervised work with technical training.</li><li>Complete local requirements and ask about the Red Seal exam and endorsement.</li></ol></section>
         <section class="content-block"><h2>Starter tool list</h2><ul class="tools-list">${tools}</ul><p class="tool-note">This is a research checklist, not a required purchase list. Ask your employer or training provider what is required, supplied, or approved before buying anything.</p></section>
-        <section class="content-block"><h2>Tools and affiliate links</h2><p>There are no affiliate links in this pilot. Tool recommendations are informational only; any future affiliate links will be clearly labelled.</p></section>
+        ${toolsAndMedia}
       </div>
       <div>
         <section class="content-block"><h2>Funding and support</h2><div class="resource-list">
@@ -201,22 +222,22 @@ function renderDetail(trade) {
           ${externalLink(nationalResources.provinces, "Provincial and territorial programs", "Find your local authority and ask about regional funding.")}
         </div><p class="fine-print">Programs and eligibility can change. Check the official program pages for details and deadlines.</p></section>
         <section class="content-block"><h2>Useful places to start</h2><div class="resource-list">${resources}</div><p class="fine-print">External resources are maintained by their respective organizations. Confirm current details directly with them.</p></section>
-        <section class="content-block"><h2>Community and media</h2><p>Trade forums, photo guides, and video or audio resources are planned next. This first version has no accounts, user uploads, or discussion boards.</p></section>
+        ${communityBlock}
       </div>
-    </div>
+    </div>`}
   `;
+  if (section !== "overview") bindSheetMetalSection(section, detailContent);
 
   document.title = `ApprenticeHub - ${trade.name}`;
 }
 
 function showCurrentRoute() {
-  const match = window.location.hash.match(/^#trade\/([a-z-]+)$/);
-  const trade = match && trades.find((item) => item.id === match[1]);
+  const { trade, section } = parseRoute();
 
   if (trade) {
     homeView.hidden = true;
     detailView.hidden = false;
-    renderDetail(trade);
+    renderDetail(trade, section);
     window.scrollTo(0, 0);
     document.getElementById("detail-title").focus({ preventScroll: true });
   } else {
@@ -229,9 +250,8 @@ function showCurrentRoute() {
 searchInput.addEventListener("input", renderTrades);
 provinceSelect.addEventListener("change", () => {
   locationNote.textContent = `Showing Canada-wide resources. For ${provinceSelect.value}, confirm local apprenticeship rules, training, and funding with the official authority.`;
-  const match = window.location.hash.match(/^#trade\/([a-z-]+)$/);
-  const trade = match && trades.find((item) => item.id === match[1]);
-  if (trade) renderDetail(trade);
+  const { trade, section } = parseRoute();
+  if (trade) renderDetail(trade, section);
 });
 window.addEventListener("hashchange", showCurrentRoute);
 
