@@ -232,21 +232,22 @@ function escapeHtml(text) {
 }
 
 function readScores() {
-  try { return JSON.parse(localStorage.getItem("smw-scores") || "{}"); } catch { return {}; }
+  try { return JSON.parse(localStorage.getItem(`${P.store}-scores`) || "{}"); } catch { return {}; }
 }
 
 function saveScore(key, percent) {
   const scores = readScores();
   scores[key] = Math.max(scores[key] || 0, percent);
-  try { localStorage.setItem("smw-scores", JSON.stringify(scores)); } catch { /* storage unavailable */ }
+  try { localStorage.setItem(`${P.store}-scores`, JSON.stringify(scores)); } catch { /* storage unavailable */ }
 }
+
 
 function sheetMetalLinkCard(url, label, description) {
   return `<a class="resource-link" href="${url}" target="_blank" rel="noopener noreferrer"><span><strong>${label}</strong><small>${description}</small></span><span aria-hidden="true">↗</span></a>`;
 }
 
 function featuredTool() {
-  const pool = toolGroups.slice(0, 2).flatMap((g) => g.items);
+  const pool = P.toolGroups.slice(0, 2).flatMap((g) => g.items);
   const now = new Date();
   return pool[(now.getFullYear() * 12 + now.getMonth()) % pool.length];
 }
@@ -265,7 +266,7 @@ function toolCard(item, badge, featured) {
 
 function renderSheetMetalTools() {
   const pick = featuredTool();
-  const groups = toolGroups.map((group, gi) => `
+  const groups = P.toolGroups.map((group, gi) => `
     <section class="content-block" id="tool-group-${gi}">
       <h2>${group.title}</h2>
       <p class="fine-print">${group.note}</p>
@@ -274,13 +275,13 @@ function renderSheetMetalTools() {
   const jump = `<div class="jump-chips" aria-label="Jump to a section">${toolAnchors.map((label, gi) => `<button type="button" data-jump="tool-group-${gi}">${label}</button>`).join("")}</div>`;
   return `
     <section class="content-block"><h2>Buying tools</h2>
-      <p>A practical shopping guide for sheet metal apprentices. Ask your employer, union local, and training provider what is supplied or required before you buy. ${AMAZON_TAG ? "<strong>As an Amazon Associate I earn from qualifying purchases.</strong> Tool links open Amazon.ca searches and are affiliate links: if you buy, ApprenticeHub may earn a small commission at no extra cost to you. Recommendations are chosen for quality, not commission." : "Tool links open Amazon.ca searches. They are not affiliate links."} Compare prices at other Canadian retailers too.</p>
+      <p>A practical shopping guide for ${P.short} apprentices. Ask your employer, union local, and training provider what is supplied or required before you buy. ${AMAZON_TAG ? "<strong>As an Amazon Associate I earn from qualifying purchases.</strong> Tool links open Amazon.ca searches and are affiliate links: if you buy, ApprenticeHub may earn a small commission at no extra cost to you. Recommendations are chosen for quality, not commission." : "Tool links open Amazon.ca searches. They are not affiliate links."} Compare prices at other Canadian retailers too.</p>
     </section>
     <section class="content-block"><h2>Tool of the month</h2><div class="tool-grid">${toolCard(pick, "", true)}</div><p class="fine-print">Rotates monthly from our core list. It is not paid placement.</p></section>${jump}${groups}`;
 }
 
 function renderSheetMetalLearn() {
-  return mediaGroups.map((group) => `
+  return P.mediaGroups.map((group) => `
     <section class="content-block"><h2>${group.title}</h2>
       ${group.note ? `<p class="fine-print">${group.note}</p>` : ""}
       <div class="resource-list">${group.items.map((i) => sheetMetalLinkCard(i.url, i.name, i.desc)).join("")}</div>
@@ -291,8 +292,8 @@ function renderSheetMetalPractice() {
   const scores = readScores();
   const best = (key) => (scores[key] === undefined ? "" : ` · Best ${scores[key]}%`);
   const years = [1, 2, 3, 4].map((y) => `
-    <button class="quiz-start" type="button" data-quiz="year-${y}"><strong>Year ${y} test</strong><small>${practiceBank[y].length} questions${best(`year-${y}`)}</small></button>`).join("");
-  const total = Object.values(practiceBank).reduce((n, list) => n + list.length, 0);
+    <button class="quiz-start" type="button" data-quiz="year-${y}"><strong>Year ${y} test</strong><small>${P.practiceBank[y].length} questions${best(`year-${y}`)}</small></button>`).join("");
+  const total = Object.values(P.practiceBank).reduce((n, list) => n + list.length, 0);
   return `
     <section class="content-block"><h2>Practice tests</h2>
       <p>Original study questions written for ApprenticeHub. They are not official Red Seal questions, and the real exam's content, length, and format differ by trade and jurisdiction. Check the Red Seal site for exam details. Scores are saved only in this browser.</p>
@@ -317,11 +318,11 @@ const roadmapSteps = [
 ];
 
 function renderSheetMetalRoadmap() {
-  const done = (() => { try { return JSON.parse(localStorage.getItem("smw-roadmap") || "{}"); } catch { return {}; } })();
+  const done = (() => { try { return JSON.parse(localStorage.getItem(`${P.store}-roadmap`) || "{}"); } catch { return {}; } })();
   return `
     <section class="content-block"><h2>Apprenticeship roadmap</h2>
       <p>A general path from first day to certification. Hours, years, and exam rules vary by province and employer, so this is a guide, not a requirement. Ticks are saved in this browser only.</p></section>
-    ${roadmapSteps.map((step, si) => `
+    ${P.roadmapSteps.map((step, si) => `
     <section class="content-block"><h2>${step.title}</h2>
       <ul class="check-list">${step.items.map((item, ii) => { const id = `${si}-${ii}`; return `<li><label><input type="checkbox" data-road="${id}"${done[id] ? " checked" : ""}> <span>${item}</span></label></li>`; }).join("")}</ul>
     </section>`).join("")}`;
@@ -354,7 +355,7 @@ const glossary = [
   ["WHMIS", "Canada's workplace hazardous materials information system."]
 ];
 
-function renderSheetMetalReference() {
+function smReference() {
   return `
     <section class="content-block"><h2>Reference sheet</h2><p>Quick study aids. Always confirm values against your drawings, specifications, manufacturer data, and local codes.</p></section>
     <section class="content-block"><h2>Key formulas</h2>
@@ -383,48 +384,28 @@ function renderSheetMetalReference() {
         <li><strong>Triangulation:</strong> transitions such as square to round.</li>
       </ul></section>
     <section class="content-block"><h2>Glossary</h2>
-      <dl class="glossary">${glossary.map(([t, d]) => `<dt>${t}</dt><dd>${d}</dd>`).join("")}</dl></section>`;
+      <dl class="P.glossary">${P.glossary.map(([t, d]) => `<dt>${t}</dt><dd>${d}</dd>`).join("")}</dl></section>`;
 }
 
 function renderSheetMetalJobs() {
   const province = (typeof provinceSelect !== "undefined" && provinceSelect.value) || "Ontario";
-  const q = (text) => encodeURIComponent(text);
-  const links = [
-    ["Job Bank: sheet metal apprentice", `Search openings in ${province}.`, `${nationalResources.jobBank}${q("sheet metal apprentice " + province)}`],
-    ["Job Bank: sheet metal worker", `Search journeyperson openings in ${province}.`, `${nationalResources.jobBank}${q("sheet metal worker " + province)}`],
-    ["Indeed Canada: sheet metal apprentice", "Search a large job board.", `https://ca.indeed.com/jobs?q=${q("sheet metal apprentice")}&l=${q(province)}`],
-    ["SMART Canada apprenticeships", "Union training and how to apply.", "https://www.smart-union.org/canada/apprenticeships/"],
-    ["Canada's Building Trades Unions", "Find unions and apprenticeship paths.", nationalResources.buildingTrades],
-    ["Find your local apprenticeship authority", "Confirm registration and find approved employers.", nationalResources.provinces]
-  ];
+  const links = P.jobLinks(province, encodeURIComponent);
   return `
-    <section class="content-block"><h2>Jobs and employers</h2><p>Searches for ${province}. Change your province on the home page. Look for union and signatory contractors, HVAC firms, roofing and cladding shops, and fabrication shops. Ask about sponsorship and your first-year hours.</p>
+    <section class="content-block"><h2>Jobs and employers</h2><p>Searches for ${province}. Change your province on the home page. ${P.jobsIntro} Ask about sponsorship and your first-year hours.</p>
       <div class="resource-list">${links.map((l) => sheetMetalLinkCard(l[2], l[0], l[1])).join("")}</div></section>
     <section class="content-block"><h2>Applying tips</h2>
-      <ul class="check-list plain">
-        <li>Bring a short resume, your safety tickets, and ID.</li>
-        <li>Show interest in math, layout, and working with your hands.</li>
-        <li>Visit shops and halls in person when you can, and follow up.</li>
-        <li>Ask what tools you need and what the employer supplies.</li>
-      </ul></section>`;
+      <ul class="check-list plain">${P.tips.map((t) => `<li>${t}</li>`).join("")}</ul></section>`;
 }
 
 function renderSheetMetalFlashcards() {
   const cards = [
-    ...glossary.map(([t, d]) => ({ front: `What is: ${t}?`, back: d })),
-    { front: "Airflow formula (metric)", back: "Q = V × A (m³/s = m/s × m²)" },
-    { front: "Airflow formula (imperial)", back: "CFM = FPM × ft²" },
-    { front: "Circumference of a circle", back: "C = π × d" },
-    { front: "Perimeter of a rectangle", back: "P = 2 × (w + h)" },
-    { front: "Inches to millimetres", back: "1 in = 25.4 mm" },
-    { front: "Which snips cut left, right, and straight?", back: "Red cuts left, green cuts right, yellow cuts straight." },
-    { front: "Which development method for cones?", back: "Radial line development." },
-    { front: "Which development method for square-to-round transitions?", back: "Triangulation." }
+    ...P.glossary.map(([t, d]) => ({ front: `What is: ${t}?`, back: d })),
+    ...P.cards
   ];
   window.smwCards = shuffle(cards);
   return `
     <section class="content-block"><h2>Flashcards</h2>
-      <p>Tap the card to flip it. Use Next for a new card. Cards come from the glossary and formulas on the Reference tab.</p>
+      <p>Tap the card to flip it. Use Next for a new card. Cards come from the P.glossary and formulas on the Reference tab.</p>
       <button class="flashcard" id="flashcard" type="button" aria-live="polite"></button>
       <div class="forum-actions"><button class="quiz-start" id="card-prev" type="button">Previous</button><button class="quiz-submit" id="card-next" type="button">Next</button><span class="fine-print" id="card-count"></span></div>
     </section>`;
@@ -449,20 +430,20 @@ function bindFlashcards(root) {
 function renderSheetMetalProgress() {
   const scores = readScores();
   let roadmap = {};
-  try { roadmap = JSON.parse(localStorage.getItem("smw-roadmap") || "{}"); } catch { /* ignore */ }
-  const totalSteps = roadmapSteps.reduce((n, step) => n + step.items.length, 0);
+  try { roadmap = JSON.parse(localStorage.getItem(`${P.store}-roadmap`) || "{}"); } catch { /* ignore */ }
+  const totalSteps = P.roadmapSteps.reduce((n, step) => n + step.items.length, 0);
   const doneSteps = Object.values(roadmap).filter(Boolean).length;
   const row = (label, key) => `<tr><td>${label}</td><td>${scores[key] === undefined ? "Not taken" : scores[key] + "%"}</td></tr>`;
   return `
     <section class="content-block"><h2>My progress</h2>
       <p>Saved only in this browser on this device. Clearing your browser data resets it.</p></section>
     <section class="content-block"><h2>Roadmap</h2>
-      <p><strong>${doneSteps} of ${totalSteps}</strong> steps ticked. <a href="#trade/sheet-metal/roadmap">Open the roadmap</a></p></section>
+      <p><strong>${doneSteps} of ${totalSteps}</strong> steps ticked. <a href="#trade/${P.id}/roadmap">Open the roadmap</a></p></section>
     <section class="content-block"><h2>Best practice test scores</h2>
       <table class="ref-table"><thead><tr><th>Test</th><th>Best score</th></tr></thead><tbody>
         ${row("Year 1", "year-1")}${row("Year 2", "year-2")}${row("Year 3", "year-3")}${row("Year 4", "year-4")}${row("Mock Red Seal-style exam", "mock")}
       </tbody></table>
-      <p class="fine-print"><a href="#trade/sheet-metal/practice">Take a practice test</a></p></section>`;
+      <p class="fine-print"><a href="#trade/${P.id}/practice">Take a practice test</a></p></section>`;
 }
 
 function renderSheetMetalRules() {
@@ -492,7 +473,7 @@ function renderSheetMetalSection(section) {
   if (section === "progress") return renderSheetMetalProgress();
   if (section === "rules") return renderSheetMetalRules();
   if (section === "roadmap") return renderSheetMetalRoadmap();
-  if (section === "reference") return renderSheetMetalReference();
+  if (section === "reference") return P.reference();
   if (section === "jobs") return renderSheetMetalJobs();
   if (section === "tools") return renderSheetMetalTools();
   if (section === "learn") return renderSheetMetalLearn();
@@ -503,8 +484,8 @@ function renderSheetMetalSection(section) {
 
 function startQuiz(key, area, retry) {
   const questions = retry ? shuffle(retry) : key === "mock"
-    ? shuffle(Object.values(practiceBank).flat())
-    : shuffle(practiceBank[Number(key.split("-")[1])]);
+    ? shuffle(Object.values(P.practiceBank).flat())
+    : shuffle(P.practiceBank[Number(key.split("-")[1])]);
   const title = retry ? "Retry: questions you missed" : key === "mock" ? "Mock Red Seal-style exam" : `Year ${key.split("-")[1]} test`;
   const picks = new Array(questions.length).fill(null);
 
@@ -578,9 +559,9 @@ function bindSheetMetalSection(section, root) {
   if (section === "roadmap") {
     root.querySelectorAll("[data-road]").forEach((box) => box.addEventListener("change", () => {
       let saved = {};
-      try { saved = JSON.parse(localStorage.getItem("smw-roadmap") || "{}"); } catch { /* ignore */ }
+      try { saved = JSON.parse(localStorage.getItem(`${P.store}-roadmap`) || "{}"); } catch { /* ignore */ }
       saved[box.dataset.road] = box.checked;
-      try { localStorage.setItem("smw-roadmap", JSON.stringify(saved)); } catch { /* storage unavailable */ }
+      try { localStorage.setItem(`${P.store}-roadmap`, JSON.stringify(saved)); } catch { /* storage unavailable */ }
     }));
     return;
   }
@@ -590,3 +571,40 @@ function bindSheetMetalSection(section, root) {
     button.addEventListener("click", () => startQuiz(button.dataset.quiz, area));
   });
 }
+
+
+const tradePacks = {};
+let P = null;
+
+function useTrade(id) {
+  P = tradePacks[id] || null;
+  return P;
+}
+
+tradePacks["sheet-metal"] = {
+  id: "sheet-metal", store: "smw", name: "Sheet Metal Worker", short: "sheet metal",
+  sections: sheetMetalSections, toolGroups, mediaGroups, practiceBank, roadmapSteps, glossary,
+  reference: smReference,
+  cards: [
+    { front: "Airflow formula (metric)", back: "Q = V × A (m³/s = m/s × m²)" },
+    { front: "Airflow formula (imperial)", back: "CFM = FPM × ft²" },
+    { front: "Circumference of a circle", back: "C = π × d" },
+    { front: "Perimeter of a rectangle", back: "P = 2 × (w + h)" },
+    { front: "Inches to millimetres", back: "1 in = 25.4 mm" },
+    { front: "Which snips cut left, right, and straight?", back: "Red cuts left, green cuts right, yellow cuts straight." },
+    { front: "Which development method for cones?", back: "Radial line development." },
+    { front: "Which development method for square-to-round transitions?", back: "Triangulation." }
+  ],
+  jobsIntro: "Look for union and signatory contractors, HVAC firms, roofing and cladding shops, and fabrication shops.",
+  tips: ["Bring a short resume, your safety tickets, and ID.", "Show interest in math, layout, and working with your hands.", "Visit shops and halls in person when you can, and follow up.", "Ask what tools you need and what the employer supplies."],
+  jobLinks: (province, q) => [
+    ["Job Bank: sheet metal apprentice", `Search openings in ${province}.`, `${nationalResources.jobBank}${q("sheet metal apprentice " + province)}`],
+    ["Job Bank: sheet metal worker", `Search journeyperson openings in ${province}.`, `${nationalResources.jobBank}${q("sheet metal worker " + province)}`],
+    ["Indeed Canada: sheet metal apprentice", "Search a large job board.", `https://ca.indeed.com/jobs?q=${q("sheet metal apprentice")}&l=${q(province)}`],
+    ["SMART Canada apprenticeships", "Union training and how to apply.", "https://www.smart-union.org/canada/apprenticeships/"],
+    ["Canada's Building Trades Unions", "Find unions and apprenticeship paths.", nationalResources.buildingTrades],
+    ["Find your local apprenticeship authority", "Confirm registration and find approved employers.", nationalResources.provinces]
+  ],
+  forumTopics: ["Starting out", "Layout and fabrication", "Install and field work", "Red Seal and exam prep", "Tools and gear", "Province and jurisdiction"]
+};
+

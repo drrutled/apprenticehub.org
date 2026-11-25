@@ -2,7 +2,6 @@
 
 const forumTopics = ["Starting out", "Layout and fabrication", "Install and field work", "Red Seal and exam prep", "Tools and gear", "Province and jurisdiction"];
 const listingCategories = ["Hand tools", "Power tools", "PPE and clothing", "Books and study material", "Shop equipment", "Other"];
-const FORUM_TRADE = "sheet-metal";
 const listingConditions = ["New", "Like new", "Good", "Fair", "For parts"];
 
 function photoUrl(path) {
@@ -56,7 +55,7 @@ function fDate(iso) {
 function forumShell() {
   return `
     <section class="content-block"><h2>Community forum</h2>
-      <p>Discussions, questions, and a buy and sell board for sheet metal apprentices and journeypersons. Read without an account; sign in to post.</p>
+      <p>Discussions, questions, and a buy and sell board for ${P.short} apprentices and journeypersons. Read without an account; sign in to post.</p>
       <div id="forum-auth" class="forum-auth"></div>
     </section>
     <div class="sub-nav" role="tablist" aria-label="Forum views">
@@ -153,10 +152,10 @@ async function initForum(root) {
     root.querySelectorAll("[data-forum-tab]").forEach((a) => a.setAttribute("aria-current", a.dataset.forumTab === state.tab ? "page" : "false"));
     body.innerHTML = '<p class="fine-print">Loading…</p>';
     const isListing = state.tab === "listing";
-    const categories = isListing ? listingCategories : forumTopics;
+    const categories = isListing ? listingCategories : (P.forumTopics || forumTopics);
     const baseCols = "id,title,category,price,location,condition,image_path,status,created_at,profiles(display_name)";
     const build = (cols, pinned) => {
-      let q = db.from("posts").select(cols).eq("trade", FORUM_TRADE).eq("kind", state.tab).neq("status", "removed");
+      let q = db.from("posts").select(cols).eq("trade", P.id).eq("kind", state.tab).neq("status", "removed");
       if (pinned) q = q.order("pinned", { ascending: false });
       return q.order("created_at", { ascending: false }).limit(50);
     };
@@ -203,7 +202,7 @@ async function initForum(root) {
 
   function showNewPost() {
     const isListing = state.tab === "listing";
-    const categories = (isListing ? listingCategories : forumTopics).map((c) => `<option>${fEsc(c)}</option>`).join("");
+    const categories = (isListing ? listingCategories : (P.forumTopics || forumTopics)).map((c) => `<option>${fEsc(c)}</option>`).join("");
     body.innerHTML = `
       <section class="content-block"><h2>${isListing ? "New listing" : "New discussion"}</h2>
         <form id="post-form" class="forum-form">
@@ -234,7 +233,7 @@ async function initForum(root) {
         } catch (err) { msg.textContent = err.message; return; }
       }
       const row = {
-        user_id: state.user.id, trade: FORUM_TRADE, kind: state.tab, category: f.category,
+        user_id: state.user.id, trade: P.id, kind: state.tab, category: f.category,
         title: f.title.trim(), body: f.body.trim(),
         price: isListing && f.price !== "" ? Number(f.price) : null,
         location: isListing ? (f.location || "").trim() || null : null,
