@@ -20,6 +20,7 @@ create table public.posts (
   location text check (location is null or char_length(location) <= 80),
   condition text check (condition is null or condition in ('New', 'Like new', 'Good', 'Fair', 'For parts')),
   image_path text check (image_path is null or char_length(image_path) <= 200),
+  pinned boolean not null default false,
   status text not null default 'open' check (status in ('open', 'sold', 'removed')),
   created_at timestamptz not null default now()
 );
