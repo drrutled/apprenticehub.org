@@ -251,21 +251,32 @@ function featuredTool() {
   return pool[(now.getFullYear() * 12 + now.getMonth()) % pool.length];
 }
 
+const toolBadges = ["Essential", "Year 1–2", "Later", "School"];
+const toolAnchors = ["Essentials", "First & second year", "Specialized", "School supplies"];
+
+function toolCard(item, badge, featured) {
+  return `<a class="tool-card${featured ? " is-featured" : ""}" href="${toolLink(item)}" target="_blank" rel="noopener noreferrer">
+    <span class="tool-badge">${featured ? "Tool of the month" : badge}</span>
+    <strong>${item.name}</strong>
+    <span class="tool-why">${item.why}</span>
+    <span class="tool-cta">Shop on Amazon.ca <span aria-hidden="true">↗</span></span>
+  </a>`;
+}
+
 function renderSheetMetalTools() {
   const pick = featuredTool();
-  const groups = toolGroups.map((group) => `
-    <section class="content-block">
+  const groups = toolGroups.map((group, gi) => `
+    <section class="content-block" id="tool-group-${gi}">
       <h2>${group.title}</h2>
       <p class="fine-print">${group.note}</p>
-      <div class="resource-list">${group.items.map((item) =>
-        sheetMetalLinkCard(toolLink(item), item.name, item.why)
-      ).join("")}</div>
+      <div class="tool-grid">${group.items.map((item) => toolCard(item, toolBadges[gi])).join("")}</div>
     </section>`).join("");
+  const jump = `<div class="jump-chips" aria-label="Jump to a section">${toolAnchors.map((label, gi) => `<button type="button" data-jump="tool-group-${gi}">${label}</button>`).join("")}</div>`;
   return `
     <section class="content-block"><h2>Buying tools</h2>
       <p>A practical shopping guide for sheet metal apprentices. Ask your employer, union local, and training provider what is supplied or required before you buy. ${AMAZON_TAG ? "<strong>As an Amazon Associate I earn from qualifying purchases.</strong> Tool links open Amazon.ca searches and are affiliate links: if you buy, ApprenticeHub may earn a small commission at no extra cost to you. Recommendations are chosen for quality, not commission." : "Tool links open Amazon.ca searches. They are not affiliate links."} Compare prices at other Canadian retailers too.</p>
     </section>
-    <section class="content-block"><h2>Tool of the month</h2><div class="resource-list">${sheetMetalLinkCard(toolLink(pick), pick.name, pick.why)}</div><p class="fine-print">Rotates monthly from our core list. It is not paid placement.</p></section>${groups}`;
+    <section class="content-block"><h2>Tool of the month</h2><div class="tool-grid">${toolCard(pick, "", true)}</div><p class="fine-print">Rotates monthly from our core list. It is not paid placement.</p></section>${jump}${groups}`;
 }
 
 function renderSheetMetalLearn() {
@@ -505,12 +516,19 @@ function startQuiz(key, area, retry) {
 
   area.innerHTML = `
     <section class="content-block"><h2>${title}</h2>
+      <div class="quiz-progress" aria-live="polite"><div class="quiz-bar"><span></span></div><small>0 of ${questions.length} answered</small></div>
       <form id="quiz-form">${form}<button class="quiz-submit" type="submit">Submit answers</button></form>
       <div id="quiz-result" role="status"></div>
     </section>`;
   area.scrollIntoView({ behavior: "smooth", block: "start" });
 
-  area.querySelector("#quiz-form").addEventListener("submit", (event) => {
+  const quizForm = area.querySelector("#quiz-form");
+  quizForm.addEventListener("change", () => {
+    const answered = new Set([...new FormData(quizForm).keys()]).size;
+    area.querySelector(".quiz-bar span").style.width = `${(answered / questions.length) * 100}%`;
+    area.querySelector(".quiz-progress small").textContent = `${answered} of ${questions.length} answered`;
+  });
+  quizForm.addEventListener("submit", (event) => {
     event.preventDefault();
     const data = new FormData(event.target);
     let correct = 0;
@@ -548,6 +566,12 @@ function bindSheetMetalSection(section, root) {
   if (section === "forum") {
     const forumRoot = root.querySelector("#forum-root");
     if (forumRoot) initForum(forumRoot);
+    return;
+  }
+  if (section === "tools") {
+    root.querySelectorAll("[data-jump]").forEach((b) => b.addEventListener("click", () => {
+      root.querySelector(`#${b.dataset.jump}`)?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }));
     return;
   }
   if (section === "flashcards") { bindFlashcards(root); return; }
