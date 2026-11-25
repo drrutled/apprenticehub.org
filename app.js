@@ -8,6 +8,12 @@ const nationalResources = {
   jobBank: "https://www.jobbank.gc.ca/jobsearch/jobsearch?searchstring="
 };
 
+const tradeInsights = {
+  "sheet-metal": { skills: ["Strong math, geometry, and spatial thinking","Attention to detail and accurate layout","Comfort with heights and physical work","Teamwork on shop and site crews"], hazards: ["Sharp edges: wear cut-resistant gloves","Heights and lifting: fall protection and safe rigging","Hot work and welding: permits and fire watch","Noise and metal dust: hearing and eye protection"], settings: ["HVAC and ventilation contractors","Fabrication shops","Roofing and architectural cladding","Commercial and industrial construction"] },
+  "plumbing": { skills: ["Problem solving and troubleshooting","Math for slopes, offsets, and flow","Comfort with tight spaces and physical work","Clear communication with customers and crews"], hazards: ["Hot work: heat shields, fire watch, and extinguishers","Trenches and confined spaces: follow permits and shoring rules","Sewer gas and contaminated water: PPE and hygiene","Lifting heavy pipe and fixtures: use proper technique"], settings: ["Residential new construction and renovation","Commercial and industrial mechanical contractors","Service and repair companies","Maintenance departments"] },
+  "electrician": { skills: ["Strong math and logical thinking","Careful, methodical work habits","Reading drawings and code","Comfort with ladders and physical work"], hazards: ["Electrical shock: lockout, test, and prove dead","Arc flash: follow safe work procedures and wear rated PPE","Falls from ladders and lifts: fall protection","Overhead and live-work hazards: stay trained and supervised"], settings: ["Residential and commercial wiring","Industrial and maintenance electrical","Utility and infrastructure contractors","Renewable energy and EV charging"] }
+};
+
 const trades = [
   {
     id: "sheet-metal",
@@ -194,6 +200,11 @@ function renderDetail(trade, section = "overview") {
     ["reference", "Reference", "Formulas, gauge table, glossary"],
     ["forum", "Forum and buy & sell", "Ask questions and trade gear locally"]
   ].map(([id, title, text]) => `<a class="tile" href="${base}/${id}"><strong>${title}</strong><span>${text}</span><span class="tile-arrow" aria-hidden="true">→</span></a>`).join("")}</div>` : "";
+  const insight = tradeInsights[trade.id];
+  const list = (items) => `<ul class="tools-list">${items.map((i) => `<li>${i}</li>`).join("")}</ul>`;
+  const insightBlocks = insight ? `<section class="content-block"><h2>Skills that help</h2>${list(insight.skills)}</section>
+        <section class="content-block"><h2>Where you could work</h2>${list(insight.settings)}</section>
+        <section class="content-block"><h2>Safety first</h2>${list(insight.hazards)}<p class="fine-print">Safety rules vary by province and employer. Follow your training and your journeyperson's direction.</p></section>` : "";
   const toolsAndMedia = isSheetMetal
     ? `<section class="content-block"><h2>Tools and affiliate links</h2><p>See the <a href="${base}/tools">Buying tools</a> guide. Some tool links may be affiliate links; they are always clearly disclosed there.</p></section>`
     : `<section class="content-block"><h2>Tools and affiliate links</h2><p>There are no affiliate links in this pilot. Tool recommendations are informational only; any future affiliate links will be clearly labelled.</p></section>`;
@@ -220,7 +231,7 @@ function renderDetail(trade, section = "overview") {
     <div class="detail-columns">
       <div>
         <section class="content-block"><h2>What the work is like</h2><p>${trade.work}</p></section>
-        <section class="content-block"><h2>Getting started</h2><ol class="steps-list"><li>Check entry requirements with your province or territory.</li><li>Look for an employer or union apprenticeship opportunity and ask about sponsorship.</li><li>Register your apprenticeship as required locally; combine supervised work with technical training.</li><li>Complete local requirements and ask about the Red Seal exam and endorsement.</li></ol></section>
+        ${insightBlocks}<section class="content-block"><h2>Getting started</h2><ol class="steps-list"><li>Check entry requirements with your province or territory.</li><li>Look for an employer or union apprenticeship opportunity and ask about sponsorship.</li><li>Register your apprenticeship as required locally; combine supervised work with technical training.</li><li>Complete local requirements and ask about the Red Seal exam and endorsement.</li></ol></section>
         <section class="content-block"><h2>Starter tool list</h2><ul class="tools-list">${tools}</ul><p class="tool-note">This is a research checklist, not a required purchase list. Ask your employer or training provider what is required, supplied, or approved before buying anything.</p></section>
         ${toolsAndMedia}
       </div>

@@ -145,7 +145,10 @@ const plumbingPracticeBank = {
     { q: "1 psi is about how many kPa?", options: ["0.69", "6.9", "69", "690"], answer: 1, explain: "1 psi ≈ 6.895 kPa." },
     { q: "When working on a ladder you should:", options: ["Maintain three points of contact", "Stand on the top step", "Carry loads in both hands", "Lean sideways"], answer: 0, explain: "Three points of contact reduces fall risk." },
     { q: "The travel of a 45° offset is about the offset distance times:", options: ["1.0", "1.414", "2.0", "0.707"], answer: 1, explain: "Travel = offset ÷ sin 45° ≈ offset × 1.414." },
-    { q: "Plumbing tape or sealant on tapered pipe threads is used to:", options: ["Seal the threads", "Make threading easier on plastic only", "Add strength", "Colour code the joint"], answer: 0, explain: "Thread sealant fills small gaps in tapered threads. Use a product rated for the pipe material and service." }
+    { q: "Plumbing tape or sealant on tapered pipe threads is used to:", options: ["Seal the threads", "Make threading easier on plastic only", "Add strength", "Colour code the joint"], answer: 0, explain: "Thread sealant fills small gaps in tapered threads. Use a product rated for the pipe material and service." },
+    { q: "Which wrench should you use to turn a polished chrome fixture nut?", options: ["Pipe wrench", "Adjustable or basin wrench", "Locking pliers", "Hammer"], answer: 1, explain: "Smooth-jawed wrenches protect finishes that pipe wrench teeth would mark." },
+    { q: "Why is flux applied to copper before soldering?", options: ["To cool the pipe", "To clean the metal and help solder flow", "To seal threads", "To colour the joint"], answer: 1, explain: "Flux prevents oxidation and draws solder into the joint." },
+    { q: "Which PPE protects your eyes when cutting or reaming pipe?", options: ["Safety glasses", "Ear plugs", "Hard hat only", "Knee pads"], answer: 0, explain: "Chips, sparks, and debris are common. Wear eye protection." }
   ],
   2: [
     { q: "The main purpose of a trap is to:", options: ["Increase flow", "Hold a water seal that blocks sewer gas", "Filter water", "Cool waste"], answer: 1, explain: "The water seal stops sewer gases from entering the building." },
@@ -162,7 +165,10 @@ const plumbingPracticeBank = {
     { q: "When solvent-welding ABS or PVC you should:", options: ["Clean and dry the pipe, apply cement, and push and twist the joint together", "Heat the joint with a torch", "Use thread tape", "Apply grease"], answer: 0, explain: "Use the correct cement for the plastic and hold the joint briefly." },
     { q: "A toilet (water closet) drain is typically at least:", options: ["25 mm (1 in)", "50 mm (2 in)", "75 mm (3 in)", "20 mm (3/4 in)"], answer: 2, explain: "Confirm exact sizes with your code." },
     { q: "A building drain carries waste to:", options: ["The building sewer", "The roof vent", "The water heater", "The meter"], answer: 0, explain: "The building drain connects to the building sewer outside the foundation." },
-    { q: "To prevent a pipe from sagging and keep its slope, you:", options: ["Support it at the required intervals", "Bury it without support", "Tape it to a stud", "Use extra solder"], answer: 0, explain: "Hangers and supports hold grade and alignment." }
+    { q: "To prevent a pipe from sagging and keep its slope, you:", options: ["Support it at the required intervals", "Bury it without support", "Tape it to a stud", "Use extra solder"], answer: 0, explain: "Hangers and supports hold grade and alignment." },
+    { q: "A wet vent is a pipe that:", options: ["Carries waste and also serves as a vent for a fixture", "Carries only water supply", "Is used for storm water only", "Must be copper"], answer: 0, explain: "Wet venting is allowed only in the arrangements your code permits." },
+    { q: "Trap seal loss from evaporation is most likely in a:", options: ["Rarely used floor drain", "Kitchen sink", "Bathtub in daily use", "Washing machine standpipe in use"], answer: 0, explain: "Unused traps dry out. Floor drains may need trap primers." },
+    { q: "Which fitting is used for a change from horizontal to vertical in a drain?", options: ["Long-sweep or combination fitting", "Tight 90° elbow only", "Union", "Coupling"], answer: 0, explain: "Sweeping fittings keep flow smooth and reduce stoppages." }
   ],
   3: [
     { q: "A temperature and pressure relief valve on a water heater:", options: ["Relieves excess temperature or pressure", "Controls flow", "Filters water", "Adds pressure"], answer: 0, explain: "It protects the tank from over-pressure and over-temperature." },
@@ -179,7 +185,10 @@ const plumbingPracticeBank = {
     { q: "Compared with copper, plastic pipe expands:", options: ["More per degree of temperature change", "Less", "The same", "Not at all"], answer: 0, explain: "Allow for thermal movement in plastic runs." },
     { q: "A sump pump discharge typically includes a check valve to:", options: ["Stop water flowing back into the pit", "Increase flow", "Vent the pit", "Filter water"], answer: 0, explain: "The check valve prevents the pump from cycling on returning water." },
     { q: "A dishwasher air gap or high loop is used to:", options: ["Prevent drain water siphoning back into the dishwasher", "Heat water", "Vent the sink", "Quiet the pump"], answer: 0, explain: "It protects against backflow from the drain." },
-    { q: "Rough-in refers to:", options: ["Installing piping before walls and fixtures are finished", "Finishing and trim work", "Painting", "Cleaning"], answer: 0, explain: "Rough-in is the stage before the walls close and fixtures are set." }
+    { q: "Rough-in refers to:", options: ["Installing piping before walls and fixtures are finished", "Finishing and trim work", "Painting", "Cleaning"], answer: 0, explain: "Rough-in is the stage before the walls close and fixtures are set." },
+    { q: "Flow rate is commonly measured in:", options: ["Litres per minute or US gpm", "Kilopascals", "Degrees", "Watts"], answer: 0, explain: "Pressure is kPa or psi, while flow is volume per time." },
+    { q: "Hydronic (hot water) heating systems circulate water using:", options: ["A circulator pump", "A drain pump", "Gravity only", "A vent"], answer: 0, explain: "Circulators move heated water through radiators or in-floor loops." },
+    { q: "A tempering or mixing valve is installed mainly to:", options: ["Prevent scalding at fixtures", "Increase flow", "Reduce drain size", "Add air"], answer: 0, explain: "It limits outlet temperature for safety." }
   ],
   4: [
     { q: "Water supply pipes are sized using:", options: ["Fixture units or flow demand and available pressure", "Pipe colour", "Wall thickness only", "The tool in use"], answer: 0, explain: "Sizing considers demand, pressure, and length of run." },
@@ -196,7 +205,10 @@ const plumbingPracticeBank = {
     { q: "A material takeoff is:", options: ["A list of quantities taken from drawings for estimating", "Removing old pipe", "A shipping label", "A tool inventory"], answer: 0, explain: "It supports pricing and ordering." },
     { q: "A Request for Information (RFI) is used to:", options: ["Clarify unclear drawings or specifications before work", "Order tools", "Report injuries", "Close a project"], answer: 0, explain: "RFIs resolve ambiguity with the designer or general contractor." },
     { q: "As-built drawings record:", options: ["The actual installed conditions", "Original design only", "Cost estimates", "Schedules"], answer: 0, explain: "They document changes made during construction." },
-    { q: "Toilets sold in Canada typically flush at about:", options: ["4.8 to 6 L per flush", "13 L per flush", "20 L per flush", "1 L per flush"], answer: 0, explain: "Modern high-efficiency toilets use about 4.8 to 6 L." }
+    { q: "Toilets sold in Canada typically flush at about:", options: ["4.8 to 6 L per flush", "13 L per flush", "20 L per flush", "1 L per flush"], answer: 0, explain: "Modern high-efficiency toilets use about 4.8 to 6 L." },
+    { q: "Which document lists the products, finishes, and installation requirements for a project?", options: ["Specifications", "Invoice", "Timesheet", "Tool list"], answer: 0, explain: "Specifications work with drawings to define the work." },
+    { q: "Before backfilling a trench with new pipe, you should:", options: ["Inspect and test as required, then bed the pipe properly", "Cover it quickly", "Paint the pipe", "Remove the supports"], answer: 0, explain: "Proper bedding and inspection prevent later failures." },
+    { q: "An interceptor or separator for oil and sand is used to:", options: ["Keep oil and solids from entering the sewer", "Warm the water", "Vent the drain", "Boost pressure"], answer: 0, explain: "They are common in garages and car washes." }
   ]
 };
 
