@@ -51,6 +51,8 @@ alter table public.posts enable row level security;
 alter table public.replies enable row level security;
 alter table public.reports enable row level security;
 
+create policy "admins read self" on public.admins for select using (user_id = auth.uid());
+
 create policy "profiles readable" on public.profiles for select using (true);
 create policy "own profile insert" on public.profiles for insert with check (auth.uid() = id);
 create policy "own profile update" on public.profiles for update using (auth.uid() = id);
