@@ -90,12 +90,30 @@ const mediaGroups = [
     ]
   },
   {
-    title: "Audio and podcasts",
-    note: "Search results only. Listen as a supplement, not a replacement for training.",
+    title: "Audio, beginner (pre-apprentice and year 1)",
+    note: "Listen-only picks for getting oriented. Listed from beginner to journeyperson across these four audio sections. We haven't listened to every episode, so judge fit for sheet metal yourself.",
     items: [
-      { name: "Skills Ontario Trades Tech Talk Podcast", desc: "Conversations about skilled trades careers and apprenticeships from Skills Ontario.", url: "https://skillsontario.com/resources/the-skills-ontario-trades-tech-talk-podcast/" },
-      { name: "Skilled trades podcasts", desc: "Stories and advice from tradespeople.", url: "https://www.google.com/search?q=skilled+trades+apprenticeship+podcast+Canada" },
-      { name: "HVAC and sheet metal podcasts", desc: "Industry talk, installation, and career topics.", url: "https://www.google.com/search?q=HVAC+sheet+metal+podcast" }
+      { name: "Skills Ontario Trades Tech Talk Podcast", desc: "Careers, apprenticeships, and getting started in the skilled trades.", url: "https://skillsontario.com/resources/the-skills-ontario-trades-tech-talk-podcast/" },
+      { name: "TradeMasters Podcast (Canada)", desc: "Skilled trades careers, licensing, and exam topics in HVAC and related trades.", url: "https://www.tmws.ca/podcasts" },
+      { name: "YouTube: skilled trades apprenticeship podcast (audio-only listening)", desc: "Open the results and press play with the screen off, or use a background-play option.", url: "https://www.youtube.com/results?search_query=skilled+trades+apprenticeship+podcast+Canada" }
+    ]
+  },
+  {
+    title: "Audio, intermediate (years 2-3)",
+    note: "HVAC and trade-knowledge talk that builds on what you do on the job.",
+    items: [
+      { name: "HVAC podcast directory (Feedspot)", desc: "A ranked list of HVAC podcasts. Pick shows on installation, airflow, and building science.", url: "https://podcast.feedspot.com/hvac_podcasts/" },
+      { name: "YouTube: HVAC duct design and airflow podcast", desc: "Longer talks and interviews on duct design, airflow, and commissioning.", url: "https://www.youtube.com/results?search_query=HVAC+duct+design+airflow+podcast" },
+      { name: "YouTube: Red Seal exam prep (talk-through)", desc: "Study talks you can listen to while commuting.", url: "https://www.youtube.com/results?search_query=red+seal+sheet+metal+exam+prep" }
+    ]
+  },
+  {
+    title: "Audio, advanced (year 4 and journeyperson)",
+    note: "Leadership, estimating, business, and mentoring topics.",
+    items: [
+      { name: "YouTube: HVAC business and leadership podcast", desc: "Foremanship, estimating, running crews, and the trade business side.", url: "https://www.youtube.com/results?search_query=HVAC+contractor+leadership+podcast" },
+      { name: "YouTube: sheet metal estimating and project management", desc: "Takeoffs, pricing, and managing jobs.", url: "https://www.youtube.com/results?search_query=sheet+metal+estimating+project+management" },
+      { name: "Spotify: HVAC and skilled trades podcasts", desc: "Search Spotify or Apple Podcasts for HVAC, mentorship, and trades-business shows.", url: "https://open.spotify.com/search/HVAC%20podcast" }
     ]
   }
 ];
