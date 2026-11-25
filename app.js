@@ -184,6 +184,14 @@ function renderDetail(trade, section = "overview") {
   const isSheetMetal = trade.id === "sheet-metal";
   const subNav = isSheetMetal ? `<nav class="sub-nav" aria-label="Sheet Metal Worker sections">${sheetMetalSections.map((s) =>
     `<a href="#trade/sheet-metal${s.id === "overview" ? "" : `/${s.id}`}"${s.id === section ? ' aria-current="page"' : ""}>${s.label}</a>`).join("")}</nav>` : "";
+  const tiles = isSheetMetal ? `<div class="tile-grid" aria-label="Sheet Metal Worker toolkit">${[
+    ["roadmap", "Roadmap", "Year-by-year checklist to certification"],
+    ["tools", "Buying tools", "Pro-grade tools and school supplies"],
+    ["practice", "Practice tests", "73 questions and a mock Red Seal-style exam"],
+    ["flashcards", "Flashcards", "Glossary terms and formulas"],
+    ["reference", "Reference", "Formulas, gauge table, glossary"],
+    ["forum", "Forum and buy & sell", "Ask questions and trade gear locally"]
+  ].map(([id, title, text]) => `<a class="tile" href="#trade/sheet-metal/${id}"><strong>${title}</strong><span>${text}</span><span class="tile-arrow" aria-hidden="true">→</span></a>`).join("")}</div>` : "";
   const toolsAndMedia = isSheetMetal
     ? `<section class="content-block"><h2>Tools and affiliate links</h2><p>See the <a href="#trade/sheet-metal/tools">Buying tools</a> guide. Some tool links may be affiliate links; they are always clearly disclosed there.</p></section>`
     : `<section class="content-block"><h2>Tools and affiliate links</h2><p>There are no affiliate links in this pilot. Tool recommendations are informational only; any future affiliate links will be clearly labelled.</p></section>`;
@@ -202,7 +210,7 @@ function renderDetail(trade, section = "overview") {
     </div>
     <div class="detail-region"><span>Selected location: <strong>${province}</strong>. Training length, entry requirements, grants, and certification can vary by province or territory.</span><a href="${nationalResources.provinces}" target="_blank" rel="noopener noreferrer">Find your local authority ↗</a></div>
     ${subNav}
-    ${section !== "overview" ? `<div class="section-body">${renderSheetMetalSection(section)}</div>` : `<div class="facts-grid" aria-label="Apprenticeship overview">
+    ${section !== "overview" ? `<div class="section-body">${renderSheetMetalSection(section)}</div>` : `${tiles}<div class="facts-grid" aria-label="Apprenticeship overview">
       <div class="fact"><div class="fact-label">How training works</div><strong>Paid workplace learning plus technical instruction</strong></div>
       <div class="fact"><div class="fact-label">How long it takes</div><strong>${trade.duration}</strong><small>Typical estimate from Job Bank; local requirements vary.</small></div>
       <div class="fact"><div class="fact-label">Certification</div><strong>Ask your local authority about completion and Red Seal options</strong></div>
@@ -240,6 +248,8 @@ function showCurrentRoute() {
     renderDetail(trade, section);
     window.scrollTo(0, 0);
     document.getElementById("detail-title").focus({ preventScroll: true });
+    const activeTab = document.querySelector(".sub-nav [aria-current='page']");
+    if (activeTab) activeTab.scrollIntoView({ block: "nearest", inline: "center" });
   } else {
     homeView.hidden = false;
     detailView.hidden = true;
@@ -254,6 +264,11 @@ provinceSelect.addEventListener("change", () => {
   if (trade) renderDetail(trade, section);
 });
 window.addEventListener("hashchange", showCurrentRoute);
+
+const headerEl = document.querySelector(".site-header");
+const setHeaderHeight = () => document.documentElement.style.setProperty("--header-h", `${headerEl.offsetHeight}px`);
+setHeaderHeight();
+window.addEventListener("resize", setHeaderHeight);
 
 renderTrades();
 locationNote.textContent = `Selected location: ${provinceSelect.value}. Confirm local apprenticeship rules, training, and funding with the official authority.`;
