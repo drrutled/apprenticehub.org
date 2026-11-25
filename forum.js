@@ -154,11 +154,20 @@ async function initForum(root) {
     body.innerHTML = '<p class="fine-print">Loading…</p>';
     const isListing = state.tab === "listing";
     const categories = isListing ? listingCategories : forumTopics;
-    let query = db.from("posts").select("id,title,category,price,location,condition,image_path,status,created_at,profiles(display_name)")
-      .eq("trade", FORUM_TRADE).eq("kind", state.tab).neq("status", "removed").order("created_at", { ascending: false }).limit(50);
-    if (state.filter) query = query.eq("category", state.filter);
-    if (state.search) query = query.ilike("title", `%${state.search.replace(/[%_\\]/g, "")}%`);
-    const { data, error } = await query;
+    const baseCols = "id,title,category,price,location,condition,image_path,status,created_at,profiles(display_name)";
+    const build = (cols, pinned) => {
+      let q = db.from("posts").select(cols).eq("trade", FORUM_TRADE).eq("kind", state.tab).neq("status", "removed");
+      if (pinned) q = q.order("pinned", { ascending: false });
+      return q.order("created_at", { ascending: false }).limit(50);
+    };
+    const run = (cols, pinned) => {
+      let query = build(cols, pinned);
+      if (state.filter) query = query.eq("category", state.filter);
+      if (state.search) query = query.ilike("title", `%${state.search.replace(/[%_\\]/g, "")}%`);
+      return query;
+    };
+    let { data, error } = await run(baseCols + ",pinned", true);
+    if (error && /pinned/.test(error.message)) ({ data, error } = await run(baseCols, false));
     if (error) { body.innerHTML = `<div class="empty-state">${fEsc(error.message)}</div>`; return; }
 
     const options = categories.map((c) => `<option value="${fEsc(c)}"${c === state.filter ? " selected" : ""}>${fEsc(c)}</option>`).join("");
@@ -166,12 +175,12 @@ async function initForum(root) {
       <button class="market-card" type="button" data-post="${p.id}">
         <span class="market-photo">${p.image_path ? `<img src="${fEsc(photoUrl(p.image_path))}" alt="" loading="lazy">` : '<span aria-hidden="true">No photo</span>'}${p.status === "sold" ? '<span class="sold-tag">SOLD</span>' : ""}</span>
         <strong>${p.price == null ? "Free / trade" : "$" + Number(p.price).toFixed(0)}</strong>
-        <span>${fEsc(p.title)}</span>
+        <span>${p.pinned ? '<span class="pin-tag">PINNED</span>' : ""}${fEsc(p.title)}</span>
         <small>${fEsc(p.location || "")}${p.condition ? " · " + fEsc(p.condition) : ""}</small>
       </button>`).join("")}</div>` : `<div class="empty-state">No listings found.</div>`;
     const list = !isListing && data.length ? data.map((p) => `
       <button class="resource-link forum-row" type="button" data-post="${p.id}">
-        <span><strong>${fEsc(p.title)}</strong>
+        <span><strong>${p.pinned ? '<span class="pin-tag">PINNED</span>' : ""}${fEsc(p.title)}</strong>
         <small>${fEsc(p.category)} · ${fEsc(p.profiles?.display_name || "member")} · ${fDate(p.created_at)}${isListing ? ` · ${p.price == null ? "No price" : "$" + Number(p.price).toFixed(2)}${p.location ? " · " + fEsc(p.location) : ""}${p.status === "sold" ? " · SOLD" : ""}` : ""}</small></span>
         <span aria-hidden="true">→</span>
       </button>`).join("") : `<div class="empty-state">Nothing here yet. Be the first to post.</div>`;
@@ -263,6 +272,7 @@ async function initForum(root) {
           ${mine && isListing && post.status === "open" ? '<button class="quiz-start" id="mark-sold" type="button">Mark as sold</button>' : ""}
           ${mine || state.isAdmin ? '<button class="quiz-start" id="delete-post" type="button">Delete</button>' : ""}
           ${state.isAdmin && !mine ? '<button class="quiz-start" id="remove-post" type="button">Remove (moderator)</button>' : ""}
+          ${state.isAdmin && "pinned" in post ? `<button class="quiz-start" id="pin-post" type="button">${post.pinned ? "Unpin" : "Pin to top"}</button>` : ""}
           ${state.user ? '<button class="quiz-start" id="report-post" type="button">Report</button>' : ""}
         </div>
       </section>
@@ -277,6 +287,7 @@ async function initForum(root) {
       if (confirm("Delete this post?")) { if (post.image_path) await db.storage.from("listing-photos").remove([post.image_path]);
         await db.from("posts").delete().eq("id", id); showTab(); }
     });
+    body.querySelector("#pin-post")?.addEventListener("click", async () => { await db.from("posts").update({ pinned: !post.pinned }).eq("id", id); showPost(id); });
     body.querySelector("#remove-post")?.addEventListener("click", async () => { await db.from("posts").update({ status: "removed" }).eq("id", id); showTab(); });
     body.querySelector("#report-post")?.addEventListener("click", async () => {
       const reason = prompt("Why are you reporting this post?");

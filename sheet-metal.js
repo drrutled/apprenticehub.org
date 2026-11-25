@@ -3,10 +3,13 @@
 
 const sheetMetalSections = [
   { id: "overview", label: "Overview" },
+  { id: "roadmap", label: "Roadmap" },
   { id: "tools", label: "Buying tools" },
   { id: "learn", label: "Videos & audio" },
-  { id: "forum", label: "Forum" },
-  { id: "practice", label: "Practice tests" }
+  { id: "practice", label: "Practice tests" },
+  { id: "reference", label: "Reference" },
+  { id: "jobs", label: "Jobs" },
+  { id: "forum", label: "Forum" }
 ];
 
 // Amazon Associates Canada tracking ID (e.g. "yourname-20"). Leave empty until your account is approved.
@@ -130,6 +133,12 @@ const mediaGroups = [
 // Each question: q, options, answer (index), explain. Year 1-4 pools feed the mock exam.
 const practiceBank = {
   1: [
+    { q: "Which tool marks a hole centre before drilling so the bit doesn't wander?", options: ["Scriber", "Centre punch", "Hand seamer", "Dividers"], answer: 1, explain: "A centre punch makes a small dimple that guides the drill point." },
+    { q: "How many millimetres are in one inch?", options: ["2.54", "10", "25.4", "254"], answer: 2, explain: "1 in = 25.4 mm exactly." },
+    { q: "A right triangle has legs of 3 and 4. The hypotenuse is:", options: ["5", "7", "12", "25"], answer: 0, explain: "3² + 4² = 25, and the square root of 25 is 5." },
+    { q: "A hem folded on a sheet edge is used mainly to:", options: ["Change the gauge", "Stiffen the edge and remove the sharp cut edge", "Make the sheet longer", "Seal against water only"], answer: 1, explain: "Hems stiffen and make the edge safer to handle." },
+    { q: "Which eye protection is the minimum when cutting or grinding metal?", options: ["Sunglasses", "Safety glasses with side shields, plus a face shield for grinding", "Prescription glasses only", "None if it is quick"], answer: 1, explain: "Flying particles require rated eye protection, with a face shield added for grinding." },
+    { q: "Which is thicker, 22 gauge or 26 gauge sheet steel?", options: ["22 gauge", "26 gauge", "They are the same", "It depends on the colour"], answer: 0, explain: "Lower gauge numbers are thicker." },
     { q: "Aviation snips with green handles are designed to cut:", options: ["Straight lines only", "Left curves", "Right curves", "Heavy plate"], answer: 2, explain: "Green handles cut right, red cut left, and yellow cut straight." },
     { q: "For sheet steel gauge numbers, a lower number means the metal is:", options: ["Thicker", "Thinner", "Softer", "Lighter"], answer: 0, explain: "A lower gauge number is thicker sheet, so 16 gauge is thicker than 24 gauge." },
     { q: "Which fastener can be installed with access to only one side of the work?", options: ["Machine screw and nut", "Blind (pop) rivet", "Carriage bolt", "Lag bolt"], answer: 1, explain: "Blind rivets are set from one side." },
@@ -145,6 +154,12 @@ const practiceBank = {
     { q: "When lifting a heavy sheet, you should:", options: ["Bend at the waist", "Bend your knees and keep the load close", "Twist while lifting", "Lift quickly"], answer: 1, explain: "Use your legs, keep the load close, and avoid twisting." }
   ],
   2: [
+    { q: "S-slips and drive cleats are typically used on:", options: ["Transverse (cross) joints of rectangular duct", "Longitudinal corner seams", "Roof flashing", "Round pipe elbows"], answer: 0, explain: "They join duct sections at the transverse joints." },
+    { q: "What is the cross-sectional area of a 600 mm by 300 mm duct?", options: ["0.09 m²", "0.18 m²", "0.9 m²", "1.8 m²"], answer: 1, explain: "0.6 × 0.3 = 0.18 m²." },
+    { q: "About how long is the stretchout (circumference) for 100 mm diameter round pipe, before seam allowance?", options: ["100 mm", "157 mm", "314 mm", "628 mm"], answer: 2, explain: "C = π × d = 3.1416 × 100 ≈ 314 mm." },
+    { q: "On a drawing, hidden edges are normally shown as:", options: ["Thick solid lines", "Dashed lines", "Centre lines only", "Not shown"], answer: 1, explain: "Hidden lines are drawn as short dashes." },
+    { q: "Compared with a square mitred elbow without vanes, a radius elbow generally has:", options: ["Higher pressure loss", "Lower pressure loss", "No difference", "More leakage by design"], answer: 1, explain: "Smooth turns create less turbulence." },
+    { q: "A snap lock seam is typically closed by:", options: ["Pushing the female and male edges together and snapping them shut", "Welding", "Riveting only", "Gluing"], answer: 0, explain: "The pocket and flange snap together and are then flattened or sealed." },
     { q: "Radial line development is best suited to:", options: ["Rectangular ducts", "Cones and tapered round fittings", "Flat plates", "Square elbows"], answer: 1, explain: "Radial lines fan out from the apex of a cone." },
     { q: "Triangulation is commonly used to develop:", options: ["Transitions such as square to round", "Straight pipe", "Flat flashing", "Cylinders"], answer: 0, explain: "Transitions have no parallel or radial elements, so the surface is split into triangles." },
     { q: "The Pittsburgh lock seam is commonly used for:", options: ["Roof drainage", "Longitudinal corner seams on rectangular duct", "Welding stainless", "Hangers"], answer: 1, explain: "It is a common corner seam in rectangular duct fabrication." },
@@ -159,6 +174,12 @@ const practiceBank = {
     { q: "Why should burrs be removed from cut edges?", options: ["Safety and proper fit", "To make metal heavier", "To change gauge", "It is purely cosmetic"], answer: 0, explain: "Burrs cut people and prevent tight seams and joints." }
   ],
   3: [
+    { q: "About how many CFM are in 1 m³/s?", options: ["35", "212", "2119", "21 190"], answer: 2, explain: "1 m³ ≈ 35.31 ft³ and there are 60 seconds in a minute, so about 2119 CFM." },
+    { q: "Air flows at 1000 FPM through a duct carrying 2000 CFM. The duct area is:", options: ["0.5 ft²", "2 ft²", "20 ft²", "2000 ft²"], answer: 1, explain: "Area = CFM ÷ FPM = 2000 ÷ 1000 = 2 ft²." },
+    { q: "A smoke damper is intended to:", options: ["Restrict the passage of smoke through the duct", "Balance airflow", "Insulate", "Reduce noise"], answer: 0, explain: "Smoke dampers close to limit smoke spread, and fire dampers address heat and flame." },
+    { q: "Duct static pressure is commonly measured in:", options: ["Pascals or inches of water gauge", "Litres", "Degrees", "Volts"], answer: 0, explain: "Pa in metric and in. w.g. in imperial." },
+    { q: "A 4:12 roof pitch rises how far over 24 inches of horizontal run?", options: ["4 in", "6 in", "8 in", "12 in"], answer: 2, explain: "4 per 12 is 8 per 24." },
+    { q: "Compared with steel, aluminum thermal expansion is roughly:", options: ["Half as much", "About the same", "About twice as much", "Zero"], answer: 2, explain: "Aluminum expands about twice as much per degree, so fastening must allow for movement." },
     { q: "A duct has an area of 0.2 m² and air velocity of 5 m/s. What is the airflow?", options: ["0.04 m³/s", "1.0 m³/s", "25 m³/s", "10 m³/s"], answer: 1, explain: "Q = V × A = 5 × 0.2 = 1.0 m³/s." },
     { q: "A fire damper is designed to:", options: ["Balance airflow", "Close to help prevent fire spread through a rated assembly", "Silence the duct", "Filter air"], answer: 1, explain: "It closes when heat melts a fusible link or by other release." },
     { q: "A volume damper is used mainly to:", options: ["Stop fires", "Adjust airflow for balancing", "Support duct", "Add insulation"], answer: 1, explain: "Volume dampers let a balancer set branch airflow." },
@@ -173,6 +194,12 @@ const practiceBank = {
     { q: "Flexible duct should generally be installed:", options: ["Fully extended and without sharp bends", "Compressed", "Kinked at corners", "Buried"], answer: 0, explain: "Compression and kinks greatly increase friction loss." }
   ],
   4: [
+    { q: "A submittal is:", options: ["Shop drawings or product data sent for approval before fabrication or purchase", "A tool order", "A safety talk", "A lunch schedule"], answer: 0, explain: "Submittals let the designer review before work is built." },
+    { q: "Testing and balancing (TAB) aims to:", options: ["Paint ductwork", "Adjust the system so airflows match design values", "Estimate costs", "Hang duct"], answer: 1, explain: "Balancers measure and adjust to design airflow." },
+    { q: "Confined space entry normally requires:", options: ["A permit, atmospheric testing, and an attendant as your jurisdiction requires", "Nothing if it is short", "Only a flashlight", "Just a hard hat"], answer: 0, explain: "Confined spaces can hide toxic or oxygen-deficient air. Follow your provincial rules." },
+    { q: "A change order is:", options: ["A written authorization to change scope, price, or time", "A tool swap", "A shift change", "An inspection"], answer: 0, explain: "Changes should be documented and approved before extra work proceeds." },
+    { q: "SMACNA is best known for:", options: ["Publishing sheet metal and HVAC duct construction standards", "Issuing Red Seal certificates", "Making tools", "Writing building codes"], answer: 0, explain: "It publishes widely used duct construction standards." },
+    { q: "Before you take over a job from another crew, a good practice is to:", options: ["Walk the work, review drawings, and clarify open items", "Assume it is correct", "Ignore the drawings", "Start cutting at once"], answer: 0, explain: "Checking the status avoids rework and safety problems." },
     { q: "Commercial kitchen grease exhaust duct work is generally governed by which standard?", options: ["NFPA 96", "CSA W59 only", "ISO 9001", "WHMIS"], answer: 0, explain: "NFPA 96 covers ventilation control and fire protection of commercial cooking operations." },
     { q: "Duct leakage testing is performed to:", options: ["Verify leakage is within the allowed limit", "Clean the duct", "Measure thickness", "Check paint"], answer: 0, explain: "A test fan and orifice confirm leakage meets specification." },
     { q: "When welding stainless steel you should:", options: ["Use tools dedicated to stainless to avoid carbon contamination", "Use any wire brush", "Skip cleaning", "Use only flux"], answer: 0, explain: "Cross-contamination with carbon steel can cause corrosion." },
@@ -215,7 +242,14 @@ function sheetMetalLinkCard(url, label, description) {
   return `<a class="resource-link" href="${url}" target="_blank" rel="noopener noreferrer"><span><strong>${label}</strong><small>${description}</small></span><span aria-hidden="true">↗</span></a>`;
 }
 
+function featuredTool() {
+  const pool = toolGroups.slice(0, 2).flatMap((g) => g.items);
+  const now = new Date();
+  return pool[(now.getFullYear() * 12 + now.getMonth()) % pool.length];
+}
+
 function renderSheetMetalTools() {
+  const pick = featuredTool();
   const groups = toolGroups.map((group) => `
     <section class="content-block">
       <h2>${group.title}</h2>
@@ -227,7 +261,8 @@ function renderSheetMetalTools() {
   return `
     <section class="content-block"><h2>Buying tools</h2>
       <p>A practical shopping guide for sheet metal apprentices. Ask your employer, union local, and training provider what is supplied or required before you buy. ${AMAZON_TAG ? "<strong>As an Amazon Associate I earn from qualifying purchases.</strong> Tool links open Amazon.ca searches and are affiliate links: if you buy, ApprenticeHub may earn a small commission at no extra cost to you. Recommendations are chosen for quality, not commission." : "Tool links open Amazon.ca searches. They are not affiliate links."} Compare prices at other Canadian retailers too.</p>
-    </section>${groups}`;
+    </section>
+    <section class="content-block"><h2>Tool of the month</h2><div class="resource-list">${sheetMetalLinkCard(toolLink(pick), pick.name, pick.why)}</div><p class="fine-print">Rotates monthly from our core list. It is not paid placement.</p></section>${groups}`;
 }
 
 function renderSheetMetalLearn() {
@@ -257,7 +292,113 @@ function renderSheetMetalPractice() {
     <div id="quiz-area" aria-live="polite"></div>`;
 }
 
+
+const roadmapSteps = [
+  { title: "Before you start", items: ["Confirm entry requirements with your provincial or territorial apprenticeship authority", "Get the safety training employers ask for (commonly WHMIS, fall protection, and site orientation; requirements vary)", "Prepare a resume and apply to union locals (such as SMART) and employers", "Register your apprenticeship and start a hours log"] },
+  { title: "Year 1: foundations", items: ["Learn shop and site safety, PPE, and lockout/tagout", "Master measuring, layout, and the hand tools", "Learn basic cutting, forming, and seams", "Complete your first technical training block", "Build your core tool kit (see Buying tools)"] },
+  { title: "Year 2: fabrication", items: ["Practise parallel line, radial line, and triangulation development", "Fabricate duct, fittings, and transitions", "Learn soldering and basic welding as your employer teaches them", "Read plans, sections, and details with growing confidence"] },
+  { title: "Year 3: installation and systems", items: ["Install duct, hangers, and equipment on site", "Learn rigging and hoisting basics", "Work on roofing, flashing, or cladding where available", "Learn airflow math, dampers, and system balancing basics"] },
+  { title: "Year 4 and beyond: advanced", items: ["Handle complex fabrication and layout independently", "Learn estimating, takeoffs, and coordination", "Mentor first-year apprentices", "Use the Red Seal standard to find gaps in your experience"] },
+  { title: "Certification", items: ["Confirm your hours and school requirements with your authority", "Review the Red Seal trade profile and take the mock exam on the Practice tests tab", "Write your exam and ask about the Red Seal endorsement", "Check the federal completion bonus and funding pages on the Overview tab"] }
+];
+
+function renderSheetMetalRoadmap() {
+  const done = (() => { try { return JSON.parse(localStorage.getItem("smw-roadmap") || "{}"); } catch { return {}; } })();
+  return `
+    <section class="content-block"><h2>Apprenticeship roadmap</h2>
+      <p>A general path from first day to certification. Hours, years, and exam rules vary by province and employer, so this is a guide, not a requirement. Ticks are saved in this browser only.</p></section>
+    ${roadmapSteps.map((step, si) => `
+    <section class="content-block"><h2>${step.title}</h2>
+      <ul class="check-list">${step.items.map((item, ii) => { const id = `${si}-${ii}`; return `<li><label><input type="checkbox" data-road="${id}"${done[id] ? " checked" : ""}> <span>${item}</span></label></li>`; }).join("")}</ul>
+    </section>`).join("")}`;
+}
+
+const gaugeTable = [["28", "0.47", "0.0187"], ["26", "0.55", "0.0217"], ["24", "0.70", "0.0276"], ["22", "0.85", "0.0336"], ["20", "1.00", "0.0396"], ["18", "1.31", "0.0516"], ["16", "1.61", "0.0635"]];
+
+const glossary = [
+  ["Aspect ratio", "The width-to-height ratio of a rectangular duct."],
+  ["Blind rivet", "A rivet set from one side of the work."],
+  ["CFM", "Cubic feet per minute, a measure of airflow."],
+  ["Counterflashing", "Flashing lapped over base flashing to shed water."],
+  ["Damper", "A plate or blade that controls or stops airflow."],
+  ["Development", "Laying out a 3D shape flat so it can be cut and formed."],
+  ["Drive cleat", "A formed strip slid over duct flanges to join sections."],
+  ["FPM", "Feet per minute, a measure of air velocity."],
+  ["Galvanized", "Steel coated with zinc to resist rust."],
+  ["Gauge", "A number for sheet thickness. Lower numbers are thicker."],
+  ["Hanger", "A support that holds duct from the structure."],
+  ["Lockout/tagout", "Locking and tagging energy sources off before servicing."],
+  ["Pittsburgh lock", "A common corner seam on rectangular duct."],
+  ["Radial line development", "A layout method for cones and tapered round shapes."],
+  ["SDS", "Safety Data Sheet describing a product's hazards and handling."],
+  ["Static pressure", "Pressure in a duct system, in Pa or in. w.g."],
+  ["Stretchout", "The flat length of a part before forming."],
+  ["TAB", "Testing, adjusting, and balancing of air systems."],
+  ["Transition", "A fitting that joins two different duct sizes or shapes."],
+  ["Triangulation", "A layout method that splits surfaces into triangles."],
+  ["Turning vanes", "Curved blades in an elbow that guide airflow."],
+  ["WHMIS", "Canada's workplace hazardous materials information system."]
+];
+
+function renderSheetMetalReference() {
+  return `
+    <section class="content-block"><h2>Reference sheet</h2><p>Quick study aids. Always confirm values against your drawings, specifications, manufacturer data, and local codes.</p></section>
+    <section class="content-block"><h2>Key formulas</h2>
+      <ul class="check-list plain">
+        <li>Airflow: Q = V × A (m³/s = m/s × m²), or CFM = FPM × ft²</li>
+        <li>Circle area: A = π × r², circumference: C = π × d</li>
+        <li>Rectangle perimeter: P = 2 × (w + h)</li>
+        <li>Right triangle: c² = a² + b²</li>
+        <li>Slope: rise ÷ run, and a 4:12 pitch rises 4 in per 12 in of run</li>
+        <li>Scale: real length = drawing length × scale (1:50 means × 50)</li>
+      </ul></section>
+    <section class="content-block"><h2>Conversions</h2>
+      <ul class="check-list plain">
+        <li>1 in = 25.4 mm, and 1 ft = 304.8 mm</li>
+        <li>1 m = 1000 mm</li>
+        <li>1 m³/s ≈ 2119 CFM, and 1 CFM ≈ 0.4719 L/s</li>
+        <li>1 in. w.g. ≈ 249 Pa</li>
+      </ul></section>
+    <section class="content-block"><h2>Galvanized sheet gauge (approximate)</h2>
+      <table class="ref-table"><thead><tr><th>Gauge</th><th>mm</th><th>in</th></tr></thead><tbody>${gaugeTable.map((r) => `<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td></tr>`).join("")}</tbody></table>
+      <p class="fine-print">Gauge values differ by material (galvanized, stainless, aluminum). Check the manufacturer's chart.</p></section>
+    <section class="content-block"><h2>Which development method?</h2>
+      <ul class="check-list plain">
+        <li><strong>Parallel line:</strong> straight-sided shapes such as elbows and pipe.</li>
+        <li><strong>Radial line:</strong> cones and tapered round fittings.</li>
+        <li><strong>Triangulation:</strong> transitions such as square to round.</li>
+      </ul></section>
+    <section class="content-block"><h2>Glossary</h2>
+      <dl class="glossary">${glossary.map(([t, d]) => `<dt>${t}</dt><dd>${d}</dd>`).join("")}</dl></section>`;
+}
+
+function renderSheetMetalJobs() {
+  const province = (typeof provinceSelect !== "undefined" && provinceSelect.value) || "Ontario";
+  const q = (text) => encodeURIComponent(text);
+  const links = [
+    ["Job Bank: sheet metal apprentice", `Search openings in ${province}.`, `${nationalResources.jobBank}${q("sheet metal apprentice " + province)}`],
+    ["Job Bank: sheet metal worker", `Search journeyperson openings in ${province}.`, `${nationalResources.jobBank}${q("sheet metal worker " + province)}`],
+    ["Indeed Canada: sheet metal apprentice", "Search a large job board.", `https://ca.indeed.com/jobs?q=${q("sheet metal apprentice")}&l=${q(province)}`],
+    ["SMART Canada apprenticeships", "Union training and how to apply.", "https://www.smart-union.org/canada/apprenticeships/"],
+    ["Canada's Building Trades Unions", "Find unions and apprenticeship paths.", nationalResources.buildingTrades],
+    ["Find your local apprenticeship authority", "Confirm registration and find approved employers.", nationalResources.provinces]
+  ];
+  return `
+    <section class="content-block"><h2>Jobs and employers</h2><p>Searches for ${province}. Change your province on the home page. Look for union and signatory contractors, HVAC firms, roofing and cladding shops, and fabrication shops. Ask about sponsorship and your first-year hours.</p>
+      <div class="resource-list">${links.map((l) => sheetMetalLinkCard(l[2], l[0], l[1])).join("")}</div></section>
+    <section class="content-block"><h2>Applying tips</h2>
+      <ul class="check-list plain">
+        <li>Bring a short resume, your safety tickets, and ID.</li>
+        <li>Show interest in math, layout, and working with your hands.</li>
+        <li>Visit shops and halls in person when you can, and follow up.</li>
+        <li>Ask what tools you need and what the employer supplies.</li>
+      </ul></section>`;
+}
+
 function renderSheetMetalSection(section) {
+  if (section === "roadmap") return renderSheetMetalRoadmap();
+  if (section === "reference") return renderSheetMetalReference();
+  if (section === "jobs") return renderSheetMetalJobs();
   if (section === "tools") return renderSheetMetalTools();
   if (section === "learn") return renderSheetMetalLearn();
   if (section === "forum") return renderSheetMetalForum();
@@ -265,11 +406,11 @@ function renderSheetMetalSection(section) {
   return "";
 }
 
-function startQuiz(key, area) {
-  const questions = key === "mock"
+function startQuiz(key, area, retry) {
+  const questions = retry ? shuffle(retry) : key === "mock"
     ? shuffle(Object.values(practiceBank).flat())
     : shuffle(practiceBank[Number(key.split("-")[1])]);
-  const title = key === "mock" ? "Mock Red Seal-style exam" : `Year ${key.split("-")[1]} test`;
+  const title = retry ? "Retry: questions you missed" : key === "mock" ? "Mock Red Seal-style exam" : `Year ${key.split("-")[1]} test`;
   const picks = new Array(questions.length).fill(null);
 
   const form = questions.map((item, i) => `
@@ -302,12 +443,19 @@ function startQuiz(key, area) {
       fieldset.querySelectorAll("input").forEach((input) => { input.disabled = true; });
     });
     const percent = Math.round((correct / questions.length) * 100);
-    saveScore(key, percent);
+    if (!retry) saveScore(key, percent);
     const verdict = key === "mock" ? (percent >= 70 ? " Above the 70% target." : " Below the 70% target. Review and try again.") : "";
     const result = area.querySelector("#quiz-result");
     result.textContent = `You scored ${correct} of ${questions.length} (${percent}%).${verdict}`;
     result.classList.add("quiz-score");
     event.target.querySelector(".quiz-submit").hidden = true;
+    const missed = questions.filter((item, i) => picks[i] !== item.answer);
+    if (missed.length) {
+      const again = document.createElement("button");
+      again.type = "button"; again.className = "quiz-start"; again.textContent = `Retry the ${missed.length} missed`;
+      again.addEventListener("click", () => startQuiz(key, area, missed));
+      result.appendChild(document.createElement("br")); result.appendChild(again);
+    }
     result.scrollIntoView({ behavior: "smooth", block: "nearest" });
   });
 }
@@ -316,6 +464,15 @@ function bindSheetMetalSection(section, root) {
   if (section === "forum") {
     const forumRoot = root.querySelector("#forum-root");
     if (forumRoot) initForum(forumRoot);
+    return;
+  }
+  if (section === "roadmap") {
+    root.querySelectorAll("[data-road]").forEach((box) => box.addEventListener("change", () => {
+      let saved = {};
+      try { saved = JSON.parse(localStorage.getItem("smw-roadmap") || "{}"); } catch { /* ignore */ }
+      saved[box.dataset.road] = box.checked;
+      try { localStorage.setItem("smw-roadmap", JSON.stringify(saved)); } catch { /* storage unavailable */ }
+    }));
     return;
   }
   if (section !== "practice") return;
