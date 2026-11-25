@@ -93,6 +93,7 @@ const mediaGroups = [
     title: "Audio and podcasts",
     note: "Search results only. Listen as a supplement, not a replacement for training.",
     items: [
+      { name: "Skills Ontario Trades Tech Talk Podcast", desc: "Conversations about skilled trades careers and apprenticeships from Skills Ontario.", url: "https://skillsontario.com/resources/the-skills-ontario-trades-tech-talk-podcast/" },
       { name: "Skilled trades podcasts", desc: "Stories and advice from tradespeople.", url: "https://www.google.com/search?q=skilled+trades+apprenticeship+podcast+Canada" },
       { name: "HVAC and sheet metal podcasts", desc: "Industry talk, installation, and career topics.", url: "https://www.google.com/search?q=HVAC+sheet+metal+podcast" }
     ]
