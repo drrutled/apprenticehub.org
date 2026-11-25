@@ -152,7 +152,7 @@ async function initForum(root) {
           ${canPost() ? `<button class="quiz-submit" id="new-post" type="button">${isListing ? "New listing" : "New discussion"}</button>` : `<span class="fine-print">Sign in and choose a display name to post.</span>`}
         </div>
         <div class="resource-list">${list}</div>
-        ${isListing ? `<p class="fine-print">Safety: meet in public places, inspect items before paying, and never send money to people you can't verify. ApprenticeHub does not process payments or guarantee any transaction. Do not list stolen, counterfeit, or recalled tools.</p>` : ""}
+        ${isListing ? `<p class="fine-print">Local meet-ups for members selling personal items. Payment happens in person between you and the other member, not through this site. Meet in a public place, bring a friend if you can, and inspect items before paying. Don't send money in advance. ApprenticeHub doesn't handle payments or guarantee any sale. Don't list stolen, counterfeit, or recalled tools.</p>` : ""}
       </section>`;
     body.querySelector("#forum-filter").addEventListener("change", (e) => { state.filter = e.target.value; showTab(); });
     body.querySelector("#new-post")?.addEventListener("click", showNewPost);
@@ -168,9 +168,9 @@ async function initForum(root) {
           <label>Category<select name="category">${categories}</select></label>
           <label>Title<input name="title" required minlength="4" maxlength="120"></label>
           ${isListing ? `<label>Price (CAD, leave blank if free or trade)<input name="price" type="number" min="0" step="0.01"></label>
-          <label>General location (city or region only)<input name="location" maxlength="80"></label>` : ""}
-          <label>${isListing ? "Description, condition, and how to reach you" : "Message"}<textarea name="body" required maxlength="5000" rows="6"></textarea></label>
-          <p class="fine-print">Posts are public. Do not share your address, phone number, or employer-confidential information.</p>
+          <label>Meet-up area (city or region only)<input name="location" maxlength="80"></label>` : ""}
+          <label>${isListing ? "Description, condition, and preferred meet-up spot (public place)" : "Message"}<textarea name="body" required maxlength="5000" rows="6"></textarea></label>
+          <p class="fine-print">Posts are public. Do not share your home address, phone number, or employer-confidential information.</p>
           <div class="forum-actions"><button class="quiz-submit" type="submit">Post</button><button class="quiz-start" id="cancel-post" type="button">Cancel</button></div>
           <p class="forum-msg" role="status"></p>
         </form>
