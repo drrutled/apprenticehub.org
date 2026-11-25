@@ -3,6 +3,29 @@
 const forumTopics = ["Starting out", "Layout and fabrication", "Install and field work", "Red Seal and exam prep", "Tools and gear", "Province and jurisdiction"];
 const listingCategories = ["Hand tools", "Power tools", "PPE and clothing", "Books and study material", "Shop equipment", "Other"];
 const FORUM_TRADE = "sheet-metal";
+const listingConditions = ["New", "Like new", "Good", "Fair", "For parts"];
+
+function photoUrl(path) {
+  return path ? `${window.FORUM_CONFIG.url}/storage/v1/object/public/listing-photos/${encodeURI(path)}` : "";
+}
+
+// Shrinks a chosen photo to a JPEG of at most 1200px so uploads stay small.
+function resizePhoto(file) {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    img.onload = () => {
+      const scale = Math.min(1, 1200 / Math.max(img.width, img.height));
+      const canvas = document.createElement("canvas");
+      canvas.width = Math.round(img.width * scale);
+      canvas.height = Math.round(img.height * scale);
+      canvas.getContext("2d").drawImage(img, 0, 0, canvas.width, canvas.height);
+      URL.revokeObjectURL(img.src);
+      canvas.toBlob((blob) => (blob ? resolve(blob) : reject(new Error("Could not process that photo."))), "image/jpeg", 0.82);
+    };
+    img.onerror = () => reject(new Error("That file isn't a supported image."));
+    img.src = URL.createObjectURL(file);
+  });
+}
 
 let forumClient = null;
 
@@ -38,7 +61,7 @@ function forumShell() {
     </section>
     <div class="sub-nav" role="tablist" aria-label="Forum views">
       <a href="#" data-forum-tab="discussion" role="tab">Discussions</a>
-      <a href="#" data-forum-tab="listing" role="tab">Buy &amp; sell</a>
+      <a href="#" data-forum-tab="listing" role="tab">Community buy &amp; sell</a>
     </div>
     <div id="forum-body"></div>`;
 }
@@ -52,7 +75,7 @@ function renderSheetMetalForum() {
 }
 
 async function initForum(root) {
-  const state = { user: null, profile: null, isAdmin: false, tab: "discussion", filter: "" };
+  const state = { user: null, profile: null, isAdmin: false, tab: "discussion", filter: "", search: "" };
   const body = root.querySelector("#forum-body");
   const authBox = root.querySelector("#forum-auth");
 
@@ -131,14 +154,22 @@ async function initForum(root) {
     body.innerHTML = '<p class="fine-print">Loading…</p>';
     const isListing = state.tab === "listing";
     const categories = isListing ? listingCategories : forumTopics;
-    let query = db.from("posts").select("id,title,category,price,location,status,created_at,profiles(display_name)")
+    let query = db.from("posts").select("id,title,category,price,location,condition,image_path,status,created_at,profiles(display_name)")
       .eq("trade", FORUM_TRADE).eq("kind", state.tab).neq("status", "removed").order("created_at", { ascending: false }).limit(50);
     if (state.filter) query = query.eq("category", state.filter);
+    if (state.search) query = query.ilike("title", `%${state.search.replace(/[%_\\]/g, "")}%`);
     const { data, error } = await query;
     if (error) { body.innerHTML = `<div class="empty-state">${fEsc(error.message)}</div>`; return; }
 
     const options = categories.map((c) => `<option value="${fEsc(c)}"${c === state.filter ? " selected" : ""}>${fEsc(c)}</option>`).join("");
-    const list = data.length ? data.map((p) => `
+    const grid = data.length ? `<div class="market-grid">${data.map((p) => `
+      <button class="market-card" type="button" data-post="${p.id}">
+        <span class="market-photo">${p.image_path ? `<img src="${fEsc(photoUrl(p.image_path))}" alt="" loading="lazy">` : '<span aria-hidden="true">No photo</span>'}${p.status === "sold" ? '<span class="sold-tag">SOLD</span>' : ""}</span>
+        <strong>${p.price == null ? "Free / trade" : "$" + Number(p.price).toFixed(0)}</strong>
+        <span>${fEsc(p.title)}</span>
+        <small>${fEsc(p.location || "")}${p.condition ? " · " + fEsc(p.condition) : ""}</small>
+      </button>`).join("")}</div>` : `<div class="empty-state">No listings found.</div>`;
+    const list = !isListing && data.length ? data.map((p) => `
       <button class="resource-link forum-row" type="button" data-post="${p.id}">
         <span><strong>${fEsc(p.title)}</strong>
         <small>${fEsc(p.category)} · ${fEsc(p.profiles?.display_name || "member")} · ${fDate(p.created_at)}${isListing ? ` · ${p.price == null ? "No price" : "$" + Number(p.price).toFixed(2)}${p.location ? " · " + fEsc(p.location) : ""}${p.status === "sold" ? " · SOLD" : ""}` : ""}</small></span>
@@ -148,13 +179,15 @@ async function initForum(root) {
     body.innerHTML = `
       <section class="content-block">
         <div class="forum-toolbar">
+          <label>Search<input id="forum-search" type="search" value="${fEsc(state.search)}" placeholder="Search titles"></label>
           <label>Category<select id="forum-filter"><option value="">All</option>${options}</select></label>
           ${canPost() ? `<button class="quiz-submit" id="new-post" type="button">${isListing ? "New listing" : "New discussion"}</button>` : `<span class="fine-print">Sign in and choose a display name to post.</span>`}
         </div>
-        <div class="resource-list">${list}</div>
+        ${isListing ? grid : `<div class="resource-list">${list}</div>`}
         ${isListing ? `<p class="fine-print">Local meet-ups for members selling personal items. Payment happens in person between you and the other member, not through this site. Meet in a public place, bring a friend if you can, and inspect items before paying. Don't send money in advance. ApprenticeHub doesn't handle payments or guarantee any sale. Don't list stolen, counterfeit, or recalled tools.</p>` : ""}
       </section>`;
     body.querySelector("#forum-filter").addEventListener("change", (e) => { state.filter = e.target.value; showTab(); });
+    body.querySelector("#forum-search").addEventListener("keydown", (e) => { if (e.key === "Enter") { state.search = e.target.value.trim(); showTab(); } });
     body.querySelector("#new-post")?.addEventListener("click", showNewPost);
     body.querySelectorAll("[data-post]").forEach((b) => b.addEventListener("click", () => showPost(Number(b.dataset.post))));
   }
@@ -167,7 +200,9 @@ async function initForum(root) {
         <form id="post-form" class="forum-form">
           <label>Category<select name="category">${categories}</select></label>
           <label>Title<input name="title" required minlength="4" maxlength="120"></label>
-          ${isListing ? `<label>Price (CAD, leave blank if free or trade)<input name="price" type="number" min="0" step="0.01"></label>
+          ${isListing ? `<label>Condition<select name="condition">${listingConditions.map((c) => `<option>${c}</option>`).join("")}</select></label>
+          <label>Photo (optional, JPEG/PNG/WebP)<input name="photo" type="file" accept="image/jpeg,image/png,image/webp"></label>
+          <label>Price (CAD, leave blank if free or trade)<input name="price" type="number" min="0" step="0.01"></label>
           <label>Meet-up area (city or region only)<input name="location" maxlength="80"></label>` : ""}
           <label>${isListing ? "Description, condition, and preferred meet-up spot (public place)" : "Message"}<textarea name="body" required maxlength="5000" rows="6"></textarea></label>
           <p class="fine-print">Posts are public. Do not share your home address, phone number, or employer-confidential information.</p>
@@ -179,14 +214,26 @@ async function initForum(root) {
     body.querySelector("#post-form").addEventListener("submit", async (e) => {
       e.preventDefault();
       const f = Object.fromEntries(new FormData(e.target));
+      let imagePath = null;
+      const msg = e.target.querySelector(".forum-msg");
+      if (isListing && f.photo && f.photo.size) {
+        try {
+          const blob = await resizePhoto(f.photo);
+          imagePath = `${state.user.id}/${Date.now()}.jpg`;
+          const { error: upErr } = await db.storage.from("listing-photos").upload(imagePath, blob, { contentType: "image/jpeg" });
+          if (upErr) throw upErr;
+        } catch (err) { msg.textContent = err.message; return; }
+      }
       const row = {
         user_id: state.user.id, trade: FORUM_TRADE, kind: state.tab, category: f.category,
         title: f.title.trim(), body: f.body.trim(),
         price: isListing && f.price !== "" ? Number(f.price) : null,
-        location: isListing ? (f.location || "").trim() || null : null
+        location: isListing ? (f.location || "").trim() || null : null,
+        condition: isListing ? f.condition : null,
+        image_path: imagePath
       };
       const { data, error } = await db.from("posts").insert(row).select("id").single();
-      if (error) { e.target.querySelector(".forum-msg").textContent = error.message; return; }
+      if (error) { msg.textContent = error.message; return; }
       showPost(data.id);
     });
   }
@@ -209,7 +256,8 @@ async function initForum(root) {
         <button class="link-button" id="back-list" type="button">← Back</button>
         <h2>${fEsc(post.title)}</h2>
         <p class="fine-print">${fEsc(post.category)} · ${fEsc(post.profiles?.display_name || "member")} · ${fDate(post.created_at)}</p>
-        ${isListing ? `<p><strong>${post.price == null ? "No price listed" : "$" + Number(post.price).toFixed(2) + " CAD"}</strong>${post.location ? " · " + fEsc(post.location) : ""}${post.status === "sold" ? " · <strong>SOLD</strong>" : ""}</p>` : ""}
+        ${post.image_path ? `<img class="listing-photo" src="${fEsc(photoUrl(post.image_path))}" alt="Photo of ${fEsc(post.title)}">` : ""}
+        ${isListing ? `<p><strong>${post.price == null ? "No price listed" : "$" + Number(post.price).toFixed(2) + " CAD"}</strong>${post.location ? " · " + fEsc(post.location) : ""}${post.condition ? " · " + fEsc(post.condition) : ""}${post.status === "sold" ? " · <strong>SOLD</strong>" : ""}</p>` : ""}
         <p class="forum-text">${fEsc(post.body)}</p>
         <div class="forum-actions">
           ${mine && isListing && post.status === "open" ? '<button class="quiz-start" id="mark-sold" type="button">Mark as sold</button>' : ""}
@@ -218,7 +266,7 @@ async function initForum(root) {
           ${state.user ? '<button class="quiz-start" id="report-post" type="button">Report</button>' : ""}
         </div>
       </section>
-      <section class="content-block"><h2>Replies</h2>${replyHtml}
+      <section class="content-block"><h2>${isListing ? "Questions and replies" : "Replies"}</h2>${replyHtml}
         ${canPost() ? `<form id="reply-form" class="forum-form"><label>Your reply<textarea name="body" required maxlength="3000" rows="4"></textarea></label>
           <div class="forum-actions"><button class="quiz-submit" type="submit">Reply</button></div><p class="forum-msg" role="status"></p></form>` : '<p class="fine-print">Sign in to reply.</p>'}
       </section>`;
@@ -226,7 +274,8 @@ async function initForum(root) {
     body.querySelector("#back-list").addEventListener("click", showTab);
     body.querySelector("#mark-sold")?.addEventListener("click", async () => { await db.from("posts").update({ status: "sold" }).eq("id", id); showPost(id); });
     body.querySelector("#delete-post")?.addEventListener("click", async () => {
-      if (confirm("Delete this post?")) { await db.from("posts").delete().eq("id", id); showTab(); }
+      if (confirm("Delete this post?")) { if (post.image_path) await db.storage.from("listing-photos").remove([post.image_path]);
+        await db.from("posts").delete().eq("id", id); showTab(); }
     });
     body.querySelector("#remove-post")?.addEventListener("click", async () => { await db.from("posts").update({ status: "removed" }).eq("id", id); showTab(); });
     body.querySelector("#report-post")?.addEventListener("click", async () => {

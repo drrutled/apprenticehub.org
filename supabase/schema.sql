@@ -18,6 +18,8 @@ create table public.posts (
   body text not null check (char_length(body) between 1 and 5000),
   price numeric check (price is null or price >= 0),
   location text check (location is null or char_length(location) <= 80),
+  condition text check (condition is null or condition in ('New', 'Like new', 'Good', 'Fair', 'For parts')),
+  image_path text check (image_path is null or char_length(image_path) <= 200),
   status text not null default 'open' check (status in ('open', 'sold', 'removed')),
   created_at timestamptz not null default now()
 );
@@ -65,6 +67,16 @@ create policy "replies delete own or admin" on public.replies for delete using (
 
 create policy "reports insert own" on public.reports for insert with check (auth.uid() = user_id);
 create policy "reports admin read" on public.reports for select using (public.is_admin());
+
+-- Listing photos: public bucket; members may only write inside a folder named after their user id.
+insert into storage.buckets (id, name, public, file_size_limit, allowed_mime_types)
+values ('listing-photos', 'listing-photos', true, 2097152, array['image/jpeg'])
+on conflict (id) do nothing;
+
+create policy "photos upload own folder" on storage.objects for insert to authenticated
+  with check (bucket_id = 'listing-photos' and (storage.foldername(name))[1] = auth.uid()::text);
+create policy "photos delete own or admin" on storage.objects for delete to authenticated
+  using (bucket_id = 'listing-photos' and ((storage.foldername(name))[1] = auth.uid()::text or public.is_admin()));
 
 -- Make yourself a moderator after signing up:
 -- insert into public.admins (user_id) values ('<your auth user id>');
