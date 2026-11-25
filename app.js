@@ -236,5 +236,5 @@ provinceSelect.addEventListener("change", () => {
 window.addEventListener("hashchange", showCurrentRoute);
 
 renderTrades();
-locationNote.textContent = "Showing Canada-wide resources. Choose a province or territory to confirm local rules.";
+locationNote.textContent = `Selected location: ${provinceSelect.value}. Confirm local apprenticeship rules, training, and funding with the official authority.`;
 showCurrentRoute();
