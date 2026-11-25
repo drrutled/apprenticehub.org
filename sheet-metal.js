@@ -8,8 +8,11 @@ const sheetMetalSections = [
   { id: "learn", label: "Videos & audio" },
   { id: "practice", label: "Practice tests" },
   { id: "reference", label: "Reference" },
+  { id: "flashcards", label: "Flashcards" },
+  { id: "progress", label: "My progress" },
   { id: "jobs", label: "Jobs" },
-  { id: "forum", label: "Forum" }
+  { id: "forum", label: "Forum" },
+  { id: "rules", label: "Rules & privacy" }
 ];
 
 // Amazon Associates Canada tracking ID (e.g. "yourname-20"). Leave empty until your account is approved.
@@ -395,7 +398,88 @@ function renderSheetMetalJobs() {
       </ul></section>`;
 }
 
+function renderSheetMetalFlashcards() {
+  const cards = [
+    ...glossary.map(([t, d]) => ({ front: `What is: ${t}?`, back: d })),
+    { front: "Airflow formula (metric)", back: "Q = V × A (m³/s = m/s × m²)" },
+    { front: "Airflow formula (imperial)", back: "CFM = FPM × ft²" },
+    { front: "Circumference of a circle", back: "C = π × d" },
+    { front: "Perimeter of a rectangle", back: "P = 2 × (w + h)" },
+    { front: "Inches to millimetres", back: "1 in = 25.4 mm" },
+    { front: "Which snips cut left, right, and straight?", back: "Red cuts left, green cuts right, yellow cuts straight." },
+    { front: "Which development method for cones?", back: "Radial line development." },
+    { front: "Which development method for square-to-round transitions?", back: "Triangulation." }
+  ];
+  window.smwCards = shuffle(cards);
+  return `
+    <section class="content-block"><h2>Flashcards</h2>
+      <p>Tap the card to flip it. Use Next for a new card. Cards come from the glossary and formulas on the Reference tab.</p>
+      <button class="flashcard" id="flashcard" type="button" aria-live="polite"></button>
+      <div class="forum-actions"><button class="quiz-start" id="card-prev" type="button">Previous</button><button class="quiz-submit" id="card-next" type="button">Next</button><span class="fine-print" id="card-count"></span></div>
+    </section>`;
+}
+
+function bindFlashcards(root) {
+  const cards = window.smwCards;
+  let index = 0;
+  let flipped = false;
+  const card = root.querySelector("#flashcard");
+  const show = () => {
+    card.textContent = flipped ? cards[index].back : cards[index].front;
+    card.classList.toggle("is-flipped", flipped);
+    root.querySelector("#card-count").textContent = `${index + 1} of ${cards.length}`;
+  };
+  card.addEventListener("click", () => { flipped = !flipped; show(); });
+  root.querySelector("#card-next").addEventListener("click", () => { index = (index + 1) % cards.length; flipped = false; show(); });
+  root.querySelector("#card-prev").addEventListener("click", () => { index = (index - 1 + cards.length) % cards.length; flipped = false; show(); });
+  show();
+}
+
+function renderSheetMetalProgress() {
+  const scores = readScores();
+  let roadmap = {};
+  try { roadmap = JSON.parse(localStorage.getItem("smw-roadmap") || "{}"); } catch { /* ignore */ }
+  const totalSteps = roadmapSteps.reduce((n, step) => n + step.items.length, 0);
+  const doneSteps = Object.values(roadmap).filter(Boolean).length;
+  const row = (label, key) => `<tr><td>${label}</td><td>${scores[key] === undefined ? "Not taken" : scores[key] + "%"}</td></tr>`;
+  return `
+    <section class="content-block"><h2>My progress</h2>
+      <p>Saved only in this browser on this device. Clearing your browser data resets it.</p></section>
+    <section class="content-block"><h2>Roadmap</h2>
+      <p><strong>${doneSteps} of ${totalSteps}</strong> steps ticked. <a href="#trade/sheet-metal/roadmap">Open the roadmap</a></p></section>
+    <section class="content-block"><h2>Best practice test scores</h2>
+      <table class="ref-table"><thead><tr><th>Test</th><th>Best score</th></tr></thead><tbody>
+        ${row("Year 1", "year-1")}${row("Year 2", "year-2")}${row("Year 3", "year-3")}${row("Year 4", "year-4")}${row("Mock Red Seal-style exam", "mock")}
+      </tbody></table>
+      <p class="fine-print"><a href="#trade/sheet-metal/practice">Take a practice test</a></p></section>`;
+}
+
+function renderSheetMetalRules() {
+  return `
+    <section class="content-block"><h2>Community rules</h2>
+      <ul class="check-list plain">
+        <li>This is a safe place. Disrespect, judgement, and ridicule are not tolerated.</li>
+        <li>Be honest and helpful. Every question is a good question.</li>
+        <li>No harassment, hate, threats, spam, or adult content.</li>
+        <li>Don't share anyone's private information, or your own home address or phone number.</li>
+        <li>Don't post employer-confidential information or unsafe shortcuts.</li>
+        <li>Buy and sell: personal items only, and listed honestly with the real condition. No stolen, counterfeit, recalled, or illegal items.</li>
+        <li>Moderators may remove posts or accounts that break these rules.</li>
+      </ul></section>
+    <section class="content-block"><h2>Buy and sell safety</h2>
+      <p>Sales are between members. ApprenticeHub does not handle payments, shipping, or disputes, and does not guarantee any item or buyer. Meet in a public place, bring a friend if you can, inspect the item before paying, and don't send money in advance. Use your own judgement.</p></section>
+    <section class="content-block"><h2>Privacy</h2>
+      <p>When you create a forum account we store your email address, a display name you choose, and the posts, replies, listings, photos, and reports you submit. Your display name and posts are public. Your email is not shown to other members. Accounts and content are stored with Supabase, a third-party service. Practice test scores and roadmap ticks stay in your own browser and are not sent to us. To have your account or content removed, contact the site owner through the forum or the contact details on the site.</p></section>
+    <section class="content-block"><h2>Advice and links disclaimer</h2>
+      <p>Content here is informal and for learning. It is not official Red Seal material or professional, legal, or safety advice. Always follow your employer's procedures, local codes, and your journeyperson's direction. External sites are maintained by others.</p></section>
+    <section class="content-block"><h2>Affiliate disclosure</h2>
+      <p>If tool links become affiliate links, we will say so clearly on the Buying tools page, and recommendations stay based on quality, not commission.</p></section>`;
+}
+
 function renderSheetMetalSection(section) {
+  if (section === "flashcards") return renderSheetMetalFlashcards();
+  if (section === "progress") return renderSheetMetalProgress();
+  if (section === "rules") return renderSheetMetalRules();
   if (section === "roadmap") return renderSheetMetalRoadmap();
   if (section === "reference") return renderSheetMetalReference();
   if (section === "jobs") return renderSheetMetalJobs();
@@ -466,6 +550,7 @@ function bindSheetMetalSection(section, root) {
     if (forumRoot) initForum(forumRoot);
     return;
   }
+  if (section === "flashcards") { bindFlashcards(root); return; }
   if (section === "roadmap") {
     root.querySelectorAll("[data-road]").forEach((box) => box.addEventListener("change", () => {
       let saved = {};
