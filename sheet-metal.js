@@ -9,6 +9,15 @@ const sheetMetalSections = [
   { id: "practice", label: "Practice tests" }
 ];
 
+// Amazon Associates Canada tracking ID (e.g. "yourname-20"). Leave empty until your account is approved.
+const AMAZON_TAG = "";
+
+function toolLink(item) {
+  const params = new URLSearchParams({ k: item.search });
+  if (AMAZON_TAG) params.set("tag", AMAZON_TAG);
+  return `https://www.amazon.ca/s?${params}`;
+}
+
 const toolGroups = [
   {
     title: "Day-one tools, buy once and buy well",
@@ -212,12 +221,12 @@ function renderSheetMetalTools() {
       <h2>${group.title}</h2>
       <p class="fine-print">${group.note}</p>
       <div class="resource-list">${group.items.map((item) =>
-        sheetMetalLinkCard(`https://www.google.com/search?q=${encodeURIComponent(item.search + " Canada buy")}`, item.name, item.why)
+        sheetMetalLinkCard(toolLink(item), item.name, item.why)
       ).join("")}</div>
     </section>`).join("");
   return `
     <section class="content-block"><h2>Buying tools</h2>
-      <p>A practical shopping guide for sheet metal apprentices. Ask your employer, union local, and training provider what is supplied or required before you buy. Links open a general web search so you can compare Canadian retailers; they are not affiliate links.</p>
+      <p>A practical shopping guide for sheet metal apprentices. Ask your employer, union local, and training provider what is supplied or required before you buy. ${AMAZON_TAG ? "<strong>As an Amazon Associate I earn from qualifying purchases.</strong> Tool links open Amazon.ca searches and are affiliate links: if you buy, ApprenticeHub may earn a small commission at no extra cost to you. Recommendations are chosen for quality, not commission." : "Tool links open Amazon.ca searches. They are not affiliate links."} Compare prices at other Canadian retailers too.</p>
     </section>${groups}`;
 }
 

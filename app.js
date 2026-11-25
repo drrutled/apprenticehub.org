@@ -185,7 +185,7 @@ function renderDetail(trade, section = "overview") {
   const subNav = isSheetMetal ? `<nav class="sub-nav" aria-label="Sheet Metal Worker sections">${sheetMetalSections.map((s) =>
     `<a href="#trade/sheet-metal${s.id === "overview" ? "" : `/${s.id}`}"${s.id === section ? ' aria-current="page"' : ""}>${s.label}</a>`).join("")}</nav>` : "";
   const toolsAndMedia = isSheetMetal
-    ? `<section class="content-block"><h2>Tools and affiliate links</h2><p>See the <a href="#trade/sheet-metal/tools">Buying tools</a> guide. There are no affiliate links; any future affiliate links will be clearly labelled.</p></section>`
+    ? `<section class="content-block"><h2>Tools and affiliate links</h2><p>See the <a href="#trade/sheet-metal/tools">Buying tools</a> guide. Some tool links may be affiliate links; they are always clearly disclosed there.</p></section>`
     : `<section class="content-block"><h2>Tools and affiliate links</h2><p>There are no affiliate links in this pilot. Tool recommendations are informational only; any future affiliate links will be clearly labelled.</p></section>`;
   const communityBlock = isSheetMetal
     ? `<section class="content-block"><h2>Community and media</h2><p>Join the <a href="#trade/sheet-metal/forum">forum</a>, browse <a href="#trade/sheet-metal/learn">videos and audio</a>, or take a <a href="#trade/sheet-metal/practice">practice test</a>.</p></section>`
