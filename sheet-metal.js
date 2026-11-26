@@ -405,7 +405,7 @@ function renderSheetMetalFlashcards() {
   window.smwCards = shuffle(cards);
   return `
     <section class="content-block"><h2>Flashcards</h2>
-      <p>Tap the card to flip it. Use Next for a new card. Cards come from the glossary and formulas on the Reference tab.</p>
+      <p>Read the question, tap the card to see the answer, then tap again for the next card. Previous and Next also work. Cards come from the glossary and formulas on the Reference tab.</p>
       <button class="flashcard" id="flashcard" type="button" aria-live="polite"></button>
       <div class="forum-actions"><button class="quiz-start" id="card-prev" type="button">Previous</button><button class="quiz-submit" id="card-next" type="button">Next</button><span class="fine-print" id="card-count"></span></div>
     </section>`;
@@ -421,7 +421,10 @@ function bindFlashcards(root) {
     card.classList.toggle("is-flipped", flipped);
     root.querySelector("#card-count").textContent = `${index + 1} of ${cards.length}`;
   };
-  card.addEventListener("click", () => { flipped = !flipped; show(); });
+  card.addEventListener("click", () => {
+    if (!flipped) { flipped = true; } else { index = (index + 1) % cards.length; flipped = false; }
+    show();
+  });
   root.querySelector("#card-next").addEventListener("click", () => { index = (index + 1) % cards.length; flipped = false; show(); });
   root.querySelector("#card-prev").addEventListener("click", () => { index = (index - 1 + cards.length) % cards.length; flipped = false; show(); });
   show();
