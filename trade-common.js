@@ -77,6 +77,13 @@ function tradeReference(pack, referenceBlocks) {
 }
 
 // Registers a trade guide from one data object. Required keys are documented in trades/README-FORMAT.txt.
+function watchFirstBlock(video, name) {
+  return `<section class="content-block"><h2>Watch first</h2>
+    <p class="fine-print">See the real job before you read on.</p>
+    <div class="video-embed"><iframe src="https://www.youtube-nocookie.com/embed/${video.id}" title="Watch first: ${name}" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+  </section>`;
+}
+
 function registerTrade(def) {
   const jobLinks = (province, q) => [
     [`Job Bank: ${def.jobSearch}`, `Search openings in ${province}.`, `${nationalResources.jobBank}${q(def.jobSearch + " " + province)}`],
