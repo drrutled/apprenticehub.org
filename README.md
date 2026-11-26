@@ -1,10 +1,10 @@
 # ApprenticeHub.org
 
-A Canada-wide skilled-trades resource directory, currently in its first pilot release.
+A Canada-wide skilled-trades resource directory, with a full guide for every Red Seal trade listed.
 
 ## What is live
 
-- A searchable directory of Red Seal trades, including pilot guides for Sheet Metal Worker, Plumbing (Plumber), and Electrician (Construction Electrician). Other Red Seal trades are marked as coming soon and link to the [official trade list](https://red-seal.ca/eng/welcome.shtml).
+- A searchable directory of Red Seal trades, including full guides for Sheet Metal Worker, Plumbing, Electrician, and 51 more trades. Each guide has the same tabs: roadmap, buying tools, videos and audio, practice tests, reference, flashcards, progress, jobs, and a forum.
 - Province and territory selector with links to official apprenticeship information.
 - Starter tool checklists, trade overviews, union resources, Job Bank searches, and federal funding links.
 - Responsive layout with no framework or third-party runtime dependencies.
@@ -18,7 +18,7 @@ Apprenticeship requirements, training length, funding, and certification can var
 - `app.js` contains the trade guide content, search/filter behavior, and resource links.
 - `favicon.svg` is the ApprenticeHub logo used for the browser bookmark icon.
 
-Add a trade entry to the `trades` array in `app.js` and remove its title from `upcomingTrades` to create another guide. Verify new resource links and jurisdiction-specific details with official sources before publishing.
+Trade guides live in `trades/<id>.js` and call `registerTrade({...})` from `trade-common.js`; add a script tag in `index.html` for each new file. Registering a trade also removes its title from `upcomingTrades`. Links in the newer guides are YouTube searches and organization home pages, so please spot-check them, and have a journeyperson review practice questions and reference figures before relying on them. Verify new resource links and jurisdiction-specific details with official sources before publishing.
 
 ## Publish
 

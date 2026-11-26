@@ -618,3 +618,8 @@ h1, h2, h3, p { margin-top: 0; }
   .glossary dd { margin-bottom: 10px; }
   .content-block { padding: 18px; }
 }
+
+.group-chips{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 14px}
+.group-chips button{font:inherit;font-size:.85rem;padding:8px 14px;border:1px solid var(--line);background:transparent;color:inherit;cursor:pointer}
+.group-chips button[aria-pressed="true"]{background:var(--safety);border-color:var(--safety);color:var(--ink);font-weight:700}
+.start-here{border-left:4px solid var(--safety)}
