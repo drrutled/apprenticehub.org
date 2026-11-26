@@ -7,9 +7,9 @@ A Canada-wide skilled-trades resource directory, with a full guide for every Red
 - A searchable directory of Red Seal trades, including full guides for Sheet Metal Worker, Plumbing, Electrician, and 51 more trades. Each guide has the same tabs: roadmap, buying tools, videos and audio, practice tests, reference, flashcards, progress, jobs, and a forum.
 - Province and territory selector with links to official apprenticeship information.
 - Starter tool checklists, trade overviews, union resources, Job Bank searches, and federal funding links.
-- Responsive layout with no framework or third-party runtime dependencies.
+- Responsive layout with no framework; the optional community features load the Supabase client.
 
-Apprenticeship requirements, training length, funding, and certification can vary by jurisdiction. The guides link to official sources and avoid presenting one national duration as universal. Tool lists are informational, not purchase requirements. There are no affiliate links or media uploads. The Sheet Metal guide adds a buying-tools guide, video/audio search links, practice tests, and an optional community forum with buy/sell board.
+Apprenticeship requirements, training length, funding, and certification can vary by jurisdiction. The guides link to official sources and avoid presenting one national duration as universal. Tool lists are informational, not purchase requirements. Each guide includes learning resources and an optional community forum with a buy/sell board that supports listing photos.
 
 ## Updating the site
 

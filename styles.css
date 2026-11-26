@@ -335,6 +335,7 @@ h1, h2, h3, p { margin-top: 0; }
   font-family: "Arial Narrow", Impact, sans-serif;
   font-size: 24px;
   letter-spacing: -.02em;
+  overflow-wrap: anywhere;
   text-transform: uppercase;
 }
 .trade-card p { margin-bottom: 20px; color: #b7bab6; font-size: 13px; line-height: 1.6; }
@@ -410,6 +411,7 @@ h1, h2, h3, p { margin-top: 0; }
   font-family: "Arial Narrow", Impact, sans-serif;
   font-size: clamp(42px, 6vw, 68px);
   letter-spacing: -.04em;
+  overflow-wrap: anywhere;
   text-transform: uppercase;
 }
 .detail-hero p:last-child { max-width: 700px; margin: 0; color: #c2c3be; font-size: 14px; line-height: 1.7; }
@@ -503,7 +505,7 @@ h1, h2, h3, p { margin-top: 0; }
   .filters { grid-template-columns: 1fr; }
   .section-heading { align-items: start; flex-direction: column; gap: 10px; }
   .next-step { grid-template-columns: 1fr; padding: 22px; }
-  .detail-hero { grid-template-columns: 1fr; padding: 24px; }
+  .detail-hero { grid-template-columns: minmax(0, 1fr); padding: 24px; }
   .detail-art { grid-row: 1; width: 84px; height: 84px; }
   .detail-art svg { width: 56px; height: 56px; }
   .detail-columns { grid-template-columns: 1fr; }
@@ -513,7 +515,7 @@ h1, h2, h3, p { margin-top: 0; }
   .site-footer { align-items: start; flex-direction: column; gap: 9px; }
 }
 @media (max-width: 430px) {
-  .trade-grid { grid-template-columns: 1fr; }
+  .trade-grid { grid-template-columns: minmax(0, 1fr); }
   .trade-card { min-height: 240px; }
   .tools-list { grid-template-columns: 1fr; }
   .brand { gap: 9px; font-size: 13px; }
@@ -634,9 +636,10 @@ h1, h2, h3, p { margin-top: 0; }
 @media (max-width: 900px) {
   .tile-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
-@media (max-width: 640px) {
+@media (max-width: 650px) {
   .sub-nav { margin: 0 -18px 16px; padding: 10px 18px; }
   .tile-grid, .tool-grid { grid-template-columns: 1fr; }
+  .ref-table { display: block; overflow-x: auto; }
   .glossary { grid-template-columns: 1fr; gap: 2px; }
   .glossary dd { margin-bottom: 10px; }
   .content-block { padding: 18px; }
