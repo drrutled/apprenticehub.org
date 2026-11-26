@@ -318,6 +318,7 @@
   ];
 
   registerTrade({
+    introVideo: { id: "nfz-iVuMBdQ", title: "Intro video: Truck and Transport Mechanic" },
     id: "truck-transport-mechanic",
     store: "truck-transport-mechanic",
     title: "Truck and Transport Mechanic",

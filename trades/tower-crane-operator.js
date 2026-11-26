@@ -9,6 +9,7 @@ const tcBank = (rows, off) => rows.map(([q, right, wrong, explain], i) => {
 });
 
 registerTrade({
+  introVideo: { id: "P0Eag_LDFZ4", title: "Intro video: Tower Crane Operator" },
   id: "tower-crane-operator",
   store: "tower-crane-operator",
   title: "Tower Crane Operator",
