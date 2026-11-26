@@ -280,16 +280,8 @@ function renderSheetMetalTools() {
     <section class="content-block"><h2>Tool of the month</h2><div class="tool-grid">${toolCard(pick, "", true)}</div><p class="fine-print">Rotates monthly from our core list. It is not paid placement.</p></section>${jump}${groups}`;
 }
 
-function introVideoBlock(video) {
-  return `
-    <section class="content-block"><h2>Intro video</h2>
-      <p class="fine-print">A short overview of the trade. Read the guide below for detail.</p>
-      <div class="video-embed"><iframe src="https://www.youtube-nocookie.com/embed/${video.id}" title="${video.title}" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
-    </section>`;
-}
-
 function renderSheetMetalLearn() {
-  const intro = P.introVideo ? introVideoBlock(P.introVideo) : "";
+  const intro = P.introVideo ? watchFirstBlock(P.introVideo, P.name) : "";
   return intro + P.mediaGroups.map((group) => `
     <section class="content-block"><h2>${group.title}</h2>
       ${group.note ? `<p class="fine-print">${group.note}</p>` : ""}
