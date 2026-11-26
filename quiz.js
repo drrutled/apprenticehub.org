@@ -33,7 +33,8 @@ const quizQuestions = [
     { label: "Wood, tile, paint, or walls", tags: ["building", "design"] }
   ] },
   { id: "heights", prompt: "How do you feel about working at height?", options: [
-    { label: "I'm comfortable up high with training and gear", tags: ["heights"] },
+    { label: "I'm comfortable up high with training and fall protection", tags: ["heights"] },
+    { label: "I can handle height, but I'd rather not do it every day", tags: [] },
     { label: "I'd rather stay on the ground", avoid: ["heights"] }
   ] },
   { id: "pace", prompt: "How physical do you want the work to be?", options: [
@@ -42,6 +43,24 @@ const quizQuestions = [
     { label: "Mostly planning and detail, with less lifting", tags: ["precise", "design"], avoid: ["heavy"] }
   ] }
 ];
+
+const quizReasons = {
+  outdoor: "you want to work outdoors, on job sites and in the weather",
+  indoor: "you prefer a shop, plant, or indoor workplace",
+  heights: "you're comfortable working at height with the right training and safety gear",
+  heavy: "you want physically demanding, hands-on work",
+  machines: "you're drawn to big machines and equipment",
+  vehicles: "you want to work on vehicles",
+  electrical: "you're interested in wiring, power, and electronic systems",
+  pipes: "you're interested in pipes, heating, cooling, or gas systems",
+  metal: "you want to work with metal, steel, or welding",
+  precise: "you like careful, detail-focused work",
+  design: "you enjoy making things look finished and well made",
+  people: "you enjoy working directly with people",
+  food: "you're interested in food and kitchens",
+  plants: "you want to work with plants and land",
+  building: "you want to help build or finish buildings"
+};
 
 const quizTradeTags = {
   "sheet-metal": ["metal", "building", "precise"],
@@ -155,14 +174,17 @@ function showQuizResults(formData) {
 
   results.innerHTML = `
     <h2>Your best matches</h2>
-    <div class="trade-grid">${scored.map(({ trade, matched }) => `
-      <a class="trade-card" href="#trade/${trade.id}" aria-label="Open the ${trade.name} guide">
-        <span class="card-top"><span class="trade-art">${trade.icon}</span></span>
-        <h3>${trade.name}</h3>
+    <div class="quiz-matches">${scored.map(({ trade, matched }) => {
+      const reasons = [...new Set(matched)].sort((a, b) => (weights[b] || 0) - (weights[a] || 0)).slice(0, 3).map((tag) => quizReasons[tag]);
+      const why = reasons.length ? `We picked this because ${reasons.join("; ")}.` : "It overlaps with several of your answers.";
+      return `
+      <article class="quiz-match">
+        <div class="quiz-match-head"><span class="trade-art">${trade.icon}</span><h3>${trade.name}</h3></div>
         <p>${trade.summary}</p>
-        <p class="fine-print">Fits: ${matched.map((tag) => quizTagLabels[tag]).join(", ")}</p>
-        <span class="card-link"><span>Read the guide</span><span aria-hidden="true">→</span></span>
-      </a>`).join("")}
+        <p class="quiz-why"><strong>Why this path:</strong> ${why}</p>
+        <a class="card-link" href="#trade/${trade.id}" aria-label="Open the ${trade.name} guide"><span>Read the ${trade.name} guide</span><span aria-hidden="true">→</span></a>
+      </article>`;
+    }).join("")}
     </div>
     <p class="fine-print">Matches are based on the work's general nature. Check the guide and talk to people in the trade before you choose.</p>`;
 }
