@@ -625,3 +625,13 @@ h1, h2, h3, p { margin-top: 0; }
 .group-chips button{font:inherit;font-size:.85rem;padding:8px 14px;border:1px solid var(--line);background:transparent;color:inherit;cursor:pointer}
 .group-chips button[aria-pressed="true"]{background:var(--safety);border-color:var(--safety);color:var(--ink);font-weight:700}
 .start-here{border-left:4px solid var(--safety)}
+
+.quiz-cta{margin:12px 0 0}
+.quiz-cta a{font-weight:700}
+.quiz-view{max-width:760px;margin:0 auto;padding:24px 0}
+.quiz-form{display:grid;gap:18px;margin-top:20px}
+.quiz-question{border:1px solid var(--line);padding:14px 16px;margin:0}
+.quiz-question legend{font-weight:700;padding:0 6px}
+.quiz-option{display:flex;gap:10px;align-items:flex-start;padding:6px 0;cursor:pointer}
+.quiz-submit{justify-self:start;font:inherit;font-weight:700;padding:12px 20px;border:0;background:var(--safety);color:var(--ink);cursor:pointer}
+.quiz-results{margin-top:28px}
