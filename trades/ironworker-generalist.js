@@ -14,6 +14,7 @@ const iwYt = (s) => `https://www.youtube.com/results?search_query=${s}`;
 const iwNote = "Professional-grade tools that hold up to daily use. Brands are examples of trade-quality lines, not endorsements. Confirm what your employer supplies first.";
 
 registerTrade({
+  introVideo: { id: "KzSmE6zthKA", title: "Intro video: Ironworker" },
   id: "ironworker-generalist",
   store: "ironworker-generalist",
   title: "Ironworker (Generalist)",

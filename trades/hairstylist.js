@@ -9,6 +9,7 @@ const hairQuestions = (rows) => rows.map(([q, right, wrong, explain], i) => {
 });
 
 registerTrade({
+  introVideo: { id: "VTSqjzS4eSc", title: "Intro video: Hairstylist" },
   id: "hairstylist",
   store: "hairstylist",
   title: "Hairstylist",

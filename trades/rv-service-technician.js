@@ -318,6 +318,7 @@
   ];
 
   registerTrade({
+    introVideo: { id: "bf_zaN4F4_g", title: "Intro video: RV Service Technician" },
     id: "rv-service-technician",
     store: "rv-service-technician",
     title: "Recreation Vehicle Service Technician",

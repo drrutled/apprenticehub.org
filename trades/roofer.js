@@ -238,6 +238,7 @@
   ];
 
   registerTrade({
+    introVideo: { id: "8ix6-aslcdA", title: "Intro video: Roofer" },
     id: "roofer",
     store: "roofer",
     title: "Roofer",
