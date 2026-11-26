@@ -122,6 +122,31 @@ const upcomingTrades = [
   "Welder"
 ];
 
+const tradeGroups = [
+  ["all", "All trades"],
+  ["construction", "Construction and building"],
+  ["metal", "Metal, welding and industrial"],
+  ["mechanical", "Mechanics and equipment"],
+  ["service", "Service and food"]
+];
+const tradeGroupOf = {
+  "sheet-metal": "metal", plumbing: "construction", electrician: "construction",
+  carpenter: "construction", cabinetmaker: "construction", "construction-craft-worker": "construction", "concrete-finisher": "construction",
+  bricklayer: "construction", tilesetter: "construction", roofer: "construction", glazier: "construction",
+  "drywall-finisher-plasterer": "construction", "lather-interior-systems": "construction", "painter-decorator": "construction",
+  "floorcovering-installer": "construction", "insulator-heat-frost": "construction", "sprinkler-fitter": "construction",
+  "gasfitter-a": "construction", "gasfitter-b": "construction", "oil-heat-technician": "construction", "refrigeration-mechanic": "construction",
+  "steamfitter-pipefitter": "construction", "industrial-electrician": "metal", "instrumentation-technician": "metal", "powerline-technician": "construction",
+  millwright: "metal", boilermaker: "metal", welder: "metal", "metal-fabricator": "metal", machinist: "metal", "tool-and-die-maker": "metal",
+  "ironworker-generalist": "metal", "ironworker-reinforcing": "metal", "ironworker-structural": "metal",
+  "automotive-service-technician": "mechanical", "auto-body-collision": "mechanical", "automotive-refinishing": "mechanical", "motorcycle-technician": "mechanical",
+  "truck-transport-mechanic": "mechanical", "heavy-duty-technician": "mechanical", "agricultural-equipment-technician": "mechanical",
+  "transport-trailer-technician": "mechanical", "rv-service-technician": "mechanical", "parts-technician": "mechanical", "appliance-service-technician": "mechanical",
+  "heo-dozer": "mechanical", "heo-excavator": "mechanical", "heo-backhoe": "mechanical", "mobile-crane-operator": "mechanical", "tower-crane-operator": "mechanical",
+  baker: "service", cook: "service", hairstylist: "service", "landscape-horticulturist": "service"
+};
+let activeGroup = "all";
+
 const homeView = document.getElementById("home-view");
 const detailView = document.getElementById("detail-view");
 const detailContent = document.getElementById("trade-detail");
@@ -137,10 +162,10 @@ function externalLink(url, label, description) {
 
 function renderTrades() {
   const query = searchInput.value.trim().toLowerCase();
-  const matches = trades.filter((trade) =>
+  const matches = trades.filter((trade) => (activeGroup === "all" || tradeGroupOf[trade.id] === activeGroup)).filter((trade) =>
     `${trade.name} ${trade.category} ${trade.summary} ${trade.id === "plumbing" ? "plumber" : ""} ${trade.id === "electrician" ? "construction electrician" : ""} ${trade.title || ""} ${trade.aliases || ""}`.toLowerCase().includes(query)
   );
-  const upcoming = upcomingTrades.filter((name) => !tradeCatalog.some((t) => t.title === name) && name.toLowerCase().includes(query));
+  const upcoming = activeGroup !== "all" ? [] : upcomingTrades.filter((name) => !tradeCatalog.some((t) => t.title === name) && name.toLowerCase().includes(query));
   const count = matches.length + upcoming.length;
   resultCount.textContent = `${count} ${count === 1 ? "trade" : "trades"}`;
 
@@ -202,9 +227,13 @@ function renderDetail(trade, section = "overview") {
     ["tools", "Buying tools", "Pro-grade tools and school supplies"],
     ["practice", "Practice tests", `${Object.values(pack.practiceBank).flat().length} questions and a mock Red Seal-style exam`],
     ["flashcards", "Flashcards", "Glossary terms and formulas"],
-    ["reference", "Reference", "Formulas, gauge table, glossary"],
+    ["reference", "Reference", "Formulas, tables, and glossary"],
+    ["learn", "Videos & audio", "Watch and listen from beginner to journeyperson"],
+    ["jobs", "Jobs", "Openings, unions, and applying tips"],
     ["forum", "Forum and buy & sell", "Ask questions and trade gear locally"]
   ].map(([id, title, text]) => `<a class="tile" href="${base}/${id}"><strong>${title}</strong><span>${text}</span><span class="tile-arrow" aria-hidden="true">→</span></a>`).join("")}</div>` : "";
+  const startHere = isSheetMetal ? `<section class="content-block start-here"><h2>Start here</h2>
+        <ol class="steps-list"><li><a href="${base}/roadmap">Read the roadmap</a> to see what each year of the apprenticeship looks like.</li><li><a href="${base}/tools">Check the tool guide</a> before you buy anything, and ask your employer what they supply.</li><li><a href="${base}/practice">Try a Year 1 practice test</a> to see where you stand, then use the <a href="${base}/flashcards">flashcards</a> to review.</li><li><a href="${base}/jobs">Look at jobs and unions</a> in ${province}.</li></ol></section>` : "";
   const insight = tradeInsights[trade.id];
   const list = (items) => `<ul class="tools-list">${items.map((i) => `<li>${i}</li>`).join("")}</ul>`;
   const insightBlocks = insight ? `<section class="content-block"><h2>Skills that help</h2>${list(insight.skills)}</section>
@@ -228,7 +257,7 @@ function renderDetail(trade, section = "overview") {
     </div>
     <div class="detail-region"><span>Selected location: <strong>${province}</strong>. Training length, entry requirements, grants, and certification can vary by province or territory.</span><a href="${nationalResources.provinces}" target="_blank" rel="noopener noreferrer">Find your local authority ↗</a></div>
     ${subNav}
-    ${section !== "overview" ? `<div class="section-body">${renderSheetMetalSection(section)}</div>` : `${tiles}<div class="facts-grid" aria-label="Apprenticeship overview">
+    ${section !== "overview" ? `<div class="section-body">${renderSheetMetalSection(section)}</div>` : `${tiles}${startHere}<div class="facts-grid" aria-label="Apprenticeship overview">
       <div class="fact"><div class="fact-label">How training works</div><strong>Paid workplace learning plus technical instruction</strong></div>
       <div class="fact"><div class="fact-label">How long it takes</div><strong>${trade.duration}</strong><small>Typical estimate from Job Bank; local requirements vary.</small></div>
       <div class="fact"><div class="fact-label">Certification</div><strong>Ask your local authority about completion and Red Seal options</strong></div>
@@ -275,6 +304,15 @@ function showCurrentRoute() {
   }
 }
 
+const groupBar = document.getElementById("trade-groups");
+groupBar.innerHTML = tradeGroups.map(([id, label]) => `<button type="button" data-group="${id}"${id === "all" ? ' aria-pressed="true"' : ' aria-pressed="false"'}>${label}</button>`).join("");
+groupBar.addEventListener("click", (event) => {
+  const button = event.target.closest("button[data-group]");
+  if (!button) return;
+  activeGroup = button.dataset.group;
+  groupBar.querySelectorAll("button").forEach((b) => b.setAttribute("aria-pressed", String(b === button)));
+  renderTrades();
+});
 searchInput.addEventListener("input", renderTrades);
 provinceSelect.addEventListener("change", () => {
   locationNote.textContent = `Showing Canada-wide resources. For ${provinceSelect.value}, confirm local apprenticeship rules, training, and funding with the official authority.`;
@@ -288,6 +326,7 @@ const setHeaderHeight = () => document.documentElement.style.setProperty("--head
 setHeaderHeight();
 window.addEventListener("resize", setHeaderHeight);
 
+trades.sort((a, b) => a.name.localeCompare(b.name));
 renderTrades();
 locationNote.textContent = `Selected location: ${provinceSelect.value}. Confirm local apprenticeship rules, training, and funding with the official authority.`;
 showCurrentRoute();
