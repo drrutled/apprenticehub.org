@@ -8,7 +8,7 @@ const steelBank = (rows) => rows.map(([q, ok, bad, explain], i) => {
 });
 
 registerTrade({
-  introVideo: { id: "1rZxdMBAVVI", title: "Intro video: Ironworker (Structural and Ornamental)" },
+  introVideo: { id: "KzSmE6zthKA", title: "Intro video: Ironworker (Structural and Ornamental)" },
   id: "ironworker-structural",
   store: "ironworker-structural",
   title: "Ironworker (Structural/Ornamental)",

@@ -236,7 +236,6 @@
   ];
 
   registerTrade({
-    introVideo: { id: "A0X5wuskh04", title: "Intro video: Tilesetter" },
     id: "tilesetter",
     store: "tilesetter",
     title: "Tilesetter",

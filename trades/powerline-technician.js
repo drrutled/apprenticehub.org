@@ -11,7 +11,7 @@
   const yt = (s) => `https://www.youtube.com/results?search_query=${s}`;
 
   registerTrade({
-  introVideo: { id: "LjBoWLhurkY", title: "Intro video: Powerline Technician" },
+  introVideo: { id: "Nvcd60j9Sfg", title: "Intro video: Powerline Technician" },
     id: "powerline-technician",
     store: "powerline-technician",
     title: "Powerline Technician",
