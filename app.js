@@ -227,6 +227,7 @@ function renderDetail(trade, section = "overview") {
     ["tools", "Buying tools", "Pro-grade tools and school supplies"],
     ["practice", "Practice tests", `${Object.values(pack.practiceBank).flat().length} questions and a mock Red Seal-style exam`],
     ["flashcards", "Flashcards", "Glossary terms and formulas"],
+    ["progress", "My progress", "Review your roadmap and practice scores"],
     ["reference", "Reference", "Formulas, tables, and glossary"],
     ["learn", "Videos & audio", "Watch and listen from beginner to journeyperson"],
     ["jobs", "Jobs", "Openings, unions, and applying tips"],
