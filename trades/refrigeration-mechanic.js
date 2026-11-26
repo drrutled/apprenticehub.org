@@ -23,6 +23,7 @@ function buildBank(seed, raw) {
 }
 
 registerTrade({
+  introVideo: { id: "AlYSO5XpYCc", title: "Intro video: Refrigeration and Air Conditioning Mechanic" },
   id: "refrigeration-mechanic",
   store: "refrigeration-mechanic",
   title: "Refrigeration and Air Conditioning Mechanic",

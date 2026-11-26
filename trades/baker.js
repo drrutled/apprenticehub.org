@@ -9,6 +9,7 @@ const bakerQuestions = (rows) => rows.map(([q, right, wrong, explain], i) => {
 });
 
 registerTrade({
+  introVideo: { id: "GuQ0bCQTTtM", title: "Intro video: Baker" },
   id: "baker",
   store: "baker",
   title: "Baker",

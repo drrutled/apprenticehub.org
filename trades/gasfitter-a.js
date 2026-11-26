@@ -23,6 +23,7 @@ function buildBank(seed, raw) {
 }
 
 registerTrade({
+  introVideo: { id: "6d4khWILewA", title: "Intro video: Gasfitter (Class A)" },
   id: "gasfitter-a",
   store: "gasfitter-a",
   title: "Gasfitter - Class A",

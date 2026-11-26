@@ -15,6 +15,7 @@ const carpYt = (s) => "https://www.youtube.com/results?search_query=" + s;
 const carpNote = "Professional-grade tools that hold up on site. Brands are examples of trade-quality lines, not endorsements. Confirm what your employer supplies first.";
 
 registerTrade({
+  introVideo: { id: "k1245RVG_-4", title: "Intro video: Carpenter" },
   id: "carpenter",
   store: "carpenter",
   title: "Carpenter",

@@ -15,6 +15,7 @@ const cabYt = (s) => "https://www.youtube.com/results?search_query=" + s;
 const cabNote = "Professional-grade tools that hold their edge and accuracy for years. Brands are examples of trade-quality lines, not endorsements. Confirm what your employer or shop supplies first.";
 
 registerTrade({
+  introVideo: { id: "oJZ8d17FJKs", title: "Intro video: Cabinetmaker" },
   id: "cabinetmaker",
   store: "cabinetmaker",
   title: "Cabinetmaker",

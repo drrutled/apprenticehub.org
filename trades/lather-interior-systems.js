@@ -10,6 +10,7 @@
   const yt = (s) => "https://www.youtube.com/results?search_query=" + s;
 
   registerTrade({
+  introVideo: { id: "HkER3oFJrvI", title: "Intro video: Lather (Interior Systems Mechanic)" },
     id: "lather-interior-systems",
     store: "lather-interior-systems",
     title: "Lather (Interior Systems Mechanic)",

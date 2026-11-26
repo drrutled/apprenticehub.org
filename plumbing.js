@@ -292,6 +292,7 @@ tradePacks.plumbing = {
   id: "plumbing", store: "plumb", name: "Plumbing", short: "plumbing",
   sections: plumbingSections,
   toolGroups: plumbingToolGroups,
+  introVideo: { id: "lmC7wxAdklw", title: "Intro video: Plumber" },
   mediaGroups: plumbingMediaGroups,
   practiceBank: plumbingPracticeBank,
   roadmapSteps: plumbingRoadmap,

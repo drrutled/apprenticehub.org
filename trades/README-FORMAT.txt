@@ -16,6 +16,7 @@ Required keys
   insight              { skills, hazards, settings } lists
   toolGroups           4 groups: [{ title, note, items: [{ name, why, search }] }]
   mediaGroups          5 groups: official resources, video searches, and 3 audio levels
+  introVideo           optional { id, title }: YouTube video ID and accessible title, shown first in Videos & audio
   practiceBank         { 1: [], 2: [], 3: [], 4: [] } question rows: { q, options[4], answer, explain }
   roadmapSteps         6 year-by-year steps
   glossary             [[term, definition], ...]

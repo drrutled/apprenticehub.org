@@ -10,6 +10,7 @@
   const yt = (s) => "https://www.youtube.com/results?search_query=" + s;
 
   registerTrade({
+  introVideo: { id: "XQUW4c0RIk0", title: "Intro video: Drywall Finisher and Plasterer" },
     id: "drywall-finisher-plasterer",
     store: "drywall-finisher-plasterer",
     title: "Drywall Finisher and Plasterer",

@@ -11,6 +11,7 @@
   const yt = (s) => `https://www.youtube.com/results?search_query=${s}`;
 
   registerTrade({
+  introVideo: { id: "4sApO9_kOak", title: "Intro video: Instrumentation Technician" },
     id: "instrumentation-technician",
     store: "instrumentation-technician",
     title: "Instrumentation and Control Technician",

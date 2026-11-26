@@ -10,6 +10,7 @@
   const yt = (s) => "https://www.youtube.com/results?search_query=" + s;
 
   registerTrade({
+  introVideo: { id: "-rxjkM3nVOE", title: "Intro video: Floorcovering Installer" },
     id: "floorcovering-installer",
     store: "floorcovering-installer",
     title: "Floorcovering Installer",

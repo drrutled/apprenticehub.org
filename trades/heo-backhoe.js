@@ -9,6 +9,7 @@ const hoeBank = (rows, off) => rows.map(([q, right, wrong, explain], i) => {
 });
 
 registerTrade({
+  introVideo: { id: "u8Iso5y0Ce4", title: "Intro video: Heavy Equipment Operator" },
   id: "heo-backhoe",
   store: "heo-backhoe",
   title: "Heavy Equipment Operator (Tractor-Loader-Backhoe)",

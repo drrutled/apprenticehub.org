@@ -236,6 +236,7 @@
   ];
 
   registerTrade({
+  introVideo: { id: "wHDz9zOuBqA", title: "Intro video: Glazier" },
     id: "glazier",
     store: "glazier",
     title: "Glazier",

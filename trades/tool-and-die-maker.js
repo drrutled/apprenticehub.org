@@ -274,6 +274,7 @@
   ];
 
   registerTrade({
+  introVideo: { id: "3jMOOAO_qTU", title: "Intro video: Tool and Die Maker" },
     id: "tool-and-die-maker", store: "tool-and-die-maker", title: "Tool and Die Maker", name: "Tool and Die Maker", short: "tool and die",
     category: "Manufacturing · Tooling · Metalworking",
     summary: "Build, fit, and repair the dies, moulds, jigs, and fixtures that mass-produce parts, working to very close tolerances in hardened tool steels.",

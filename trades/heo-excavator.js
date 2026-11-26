@@ -9,6 +9,7 @@ const exBank = (rows, off) => rows.map(([q, right, wrong, explain], i) => {
 });
 
 registerTrade({
+  introVideo: { id: "u8Iso5y0Ce4", title: "Intro video: Heavy Equipment Operator" },
   id: "heo-excavator",
   store: "heo-excavator",
   title: "Heavy Equipment Operator (Excavator)",

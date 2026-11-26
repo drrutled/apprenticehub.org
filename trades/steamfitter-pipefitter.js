@@ -8,6 +8,7 @@ const pipefitBank = (rows) => rows.map(([q, ok, bad, explain], i) => {
 });
 
 registerTrade({
+  introVideo: { id: "bX_0Kievvsg", title: "Intro video: Steamfitter/Pipefitter" },
   id: "steamfitter-pipefitter",
   store: "steamfitter-pipefitter",
   title: "Steamfitter/Pipefitter",

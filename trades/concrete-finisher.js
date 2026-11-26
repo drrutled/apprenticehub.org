@@ -15,6 +15,7 @@ const cfYt = (s) => "https://www.youtube.com/results?search_query=" + s;
 const cfNote = "Professional-grade tools that hold their shape and finish for years. Brands are examples of trade-quality lines, not endorsements. Confirm what your employer supplies first.";
 
 registerTrade({
+  introVideo: { id: "7krCXnoiCfA", title: "Intro video: Concrete Finisher" },
   id: "concrete-finisher",
   store: "concrete-finisher",
   title: "Concrete Finisher",

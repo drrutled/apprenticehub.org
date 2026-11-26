@@ -9,6 +9,7 @@ const cookQuestions = (rows) => rows.map(([q, right, wrong, explain], i) => {
 });
 
 registerTrade({
+  introVideo: { id: "n_fGcB5X2CM", title: "Intro video: Cook" },
   id: "cook",
   store: "cook",
   title: "Cook",

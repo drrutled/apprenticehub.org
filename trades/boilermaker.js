@@ -14,6 +14,7 @@ const bmYt = (s) => `https://www.youtube.com/results?search_query=${s}`;
 const bmNote = "Professional-grade tools that hold up to daily use. Brands are examples of trade-quality lines, not endorsements. Confirm what your employer supplies first.";
 
 registerTrade({
+  introVideo: { id: "fIqKfIgSqCc", title: "Intro video: Boilermaker" },
   id: "boilermaker",
   store: "boilermaker",
   title: "Boilermaker",
