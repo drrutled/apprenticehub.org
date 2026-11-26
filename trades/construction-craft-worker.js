@@ -15,6 +15,7 @@ const ccwYt = (s) => "https://www.youtube.com/results?search_query=" + s;
 const ccwNote = "Professional-grade gear that holds up on site. Brands are examples of trade-quality lines, not endorsements. Confirm what your employer supplies first.";
 
 registerTrade({
+  introVideo: { id: "KYkUp1L2MG0", title: "Intro video: Construction Craft Worker" },
   id: "construction-craft-worker",
   store: "construction-craft-worker",
   title: "Construction Craft Worker",

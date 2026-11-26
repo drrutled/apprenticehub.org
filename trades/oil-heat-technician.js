@@ -23,6 +23,7 @@ function buildBank(seed, raw) {
 }
 
 registerTrade({
+  introVideo: { id: "x602Fz5CIXs", title: "Intro video: Oil Heat System Technician" },
   id: "oil-heat-technician",
   store: "oil-heat-technician",
   title: "Oil Heat System Technician",

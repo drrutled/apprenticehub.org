@@ -271,6 +271,7 @@
   ];
 
   registerTrade({
+  introVideo: { id: "1kqQzyXy-jo", title: "Intro video: Parts Technician" },
     id: "parts-technician", store: "parts-technician", title: "Parts Technician", name: "Parts Technician", short: "parts",
     category: "Automotive · Heavy Equipment · Supply",
     summary: "Identify, order, stock, and sell the right parts for vehicles and equipment, using catalogues, inventory systems, and strong customer service skills.",

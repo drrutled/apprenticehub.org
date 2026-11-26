@@ -11,6 +11,7 @@ const dozerBank = (rows, off) => rows.map(([q, right, wrong, explain], i) => {
 const dozerPpeNote = "Professional-grade PPE and small kit that hold up to mud, dust, and vibration. Brands are examples of trade-quality lines, not endorsements. Confirm what your employer supplies first.";
 
 registerTrade({
+  introVideo: { id: "u8Iso5y0Ce4", title: "Intro video: Heavy Equipment Operator" },
   id: "heo-dozer",
   store: "heo-dozer",
   title: "Heavy Equipment Operator (Dozer)",

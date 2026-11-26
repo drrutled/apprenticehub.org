@@ -8,6 +8,7 @@ const rebarBank = (rows) => rows.map(([q, ok, bad, explain], i) => {
 });
 
 registerTrade({
+  introVideo: { id: "t_127YEnNZw", title: "Intro video: Ironworker (Reinforcing)" },
   id: "ironworker-reinforcing",
   store: "ironworker-reinforcing",
   title: "Ironworker (Reinforcing)",

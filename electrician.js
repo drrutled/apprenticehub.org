@@ -277,6 +277,7 @@ tradePacks.electrician = {
   id: "electrician", store: "elec", name: "Construction Electrician", short: "electrician",
   sections: electricianSections,
   toolGroups: electricianToolGroups,
+  introVideo: { id: "D5c-zXGqCME", title: "Intro video: Construction Electrician" },
   mediaGroups: electricianMediaGroups,
   practiceBank: electricianPracticeBank,
   roadmapSteps: electricianRoadmap,

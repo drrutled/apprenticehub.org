@@ -282,6 +282,7 @@
   ];
 
   registerTrade({
+  introVideo: { id: "MyYyu6Abfyg", title: "Intro video: Appliance Service Technician" },
     id: "appliance-service-technician", store: "appliance-service-technician", title: "Appliance Service Technician", name: "Appliance Service Technician", short: "appliance service",
     category: "Service · Electrical · Refrigeration",
     summary: "Diagnose, repair, and install home appliances such as refrigerators, washers, dryers, ranges, and dishwashers, using electrical testing and customer-focused service skills.",

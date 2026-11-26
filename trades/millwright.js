@@ -11,6 +11,7 @@
   const yt = (s) => `https://www.youtube.com/results?search_query=${s}`;
 
   registerTrade({
+  introVideo: { id: "ROJQXBuEnEY", title: "Intro video: Millwright" },
     id: "millwright",
     store: "millwright",
     title: "Industrial Mechanic (Millwright)",

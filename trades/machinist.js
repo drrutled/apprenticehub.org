@@ -279,6 +279,7 @@
   ];
 
   registerTrade({
+  introVideo: { id: "l9rerUAr_gQ", title: "Intro video: Machinist" },
     id: "machinist", store: "machinist", title: "Machinist", name: "Machinist", short: "machining",
     category: "Manufacturing · Metalworking · Tooling",
     summary: "Turn raw metal and plastic into precise parts using lathes, mills, grinders, and CNC machines, working to tight tolerances from drawings.",

@@ -8,6 +8,7 @@ const sprinklerBank = (rows) => rows.map(([q, ok, bad, explain], i) => {
 });
 
 registerTrade({
+  introVideo: { id: "zKLEg79FhHQ", title: "Intro video: Sprinkler Fitter" },
   id: "sprinkler-fitter",
   store: "sprinkler-fitter",
   title: "Sprinkler Fitter",

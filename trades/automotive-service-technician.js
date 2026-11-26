@@ -11,6 +11,7 @@
   const toolNote = "Professional-grade tools that hold their accuracy for years. Brands are examples of trade-quality lines, not endorsements. Confirm what your employer supplies first.";
 
   registerTrade({
+  introVideo: { id: "kHORanjPxQc", title: "Intro video: Automotive Service Technician" },
     id: "automotive-service-technician",
     store: "automotive-service-technician",
     title: "Automotive Service Technician",

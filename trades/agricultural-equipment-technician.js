@@ -321,6 +321,7 @@
   ];
 
   registerTrade({
+  introVideo: { id: "a6s2EULCZAE", title: "Intro video: Agricultural Equipment Technician" },
     id: "agricultural-equipment-technician",
     store: "agricultural-equipment-technician",
     title: "Agricultural Equipment Technician",

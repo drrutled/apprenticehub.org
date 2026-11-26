@@ -14,6 +14,7 @@ const mfYt = (s) => `https://www.youtube.com/results?search_query=${s}`;
 const mfNote = "Professional-grade tools that hold up to daily use. Brands are examples of trade-quality lines, not endorsements. Confirm what your employer supplies first.";
 
 registerTrade({
+  introVideo: { id: "Pe3n9-r8TP0", title: "Intro video: Metal Fabricator (Fitter)" },
   id: "metal-fabricator",
   store: "metal-fabricator",
   title: "Metal Fabricator (Fitter)",

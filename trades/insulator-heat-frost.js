@@ -10,6 +10,7 @@
   const yt = (s) => "https://www.youtube.com/results?search_query=" + s;
 
   registerTrade({
+  introVideo: { id: "0PufRlSYcNo", title: "Intro video: Insulator (Heat and Frost)" },
     id: "insulator-heat-frost",
     store: "insulator-heat-frost",
     title: "Insulator (Heat and Frost)",

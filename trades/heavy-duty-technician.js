@@ -320,6 +320,7 @@
   ];
 
   registerTrade({
+  introVideo: { id: "nfz-iVuMBdQ", title: "Intro video: Heavy-Duty Equipment Technician" },
     id: "heavy-duty-technician",
     store: "heavy-duty-technician",
     title: "Heavy Duty Equipment Technician",

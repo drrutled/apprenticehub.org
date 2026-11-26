@@ -10,6 +10,7 @@
   const yt = (s) => "https://www.youtube.com/results?search_query=" + s;
 
   registerTrade({
+  introVideo: { id: "_gzyyPVPqM4", title: "Intro video: Painter and Decorator" },
     id: "painter-decorator",
     store: "painter-decorator",
     title: "Painter and Decorator",

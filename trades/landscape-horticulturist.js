@@ -9,6 +9,7 @@ const horticultureQuestions = (rows) => rows.map(([q, right, wrong, explain], i)
 });
 
 registerTrade({
+  introVideo: { id: "fl00YEWdYDI", title: "Intro video: Landscape Horticulturist" },
   id: "landscape-horticulturist",
   store: "landscape-horticulturist",
   title: "Landscape Horticulturist",
