@@ -626,8 +626,8 @@ h1, h2, h3, p { margin-top: 0; }
 .group-chips button[aria-pressed="true"]{background:var(--safety);border-color:var(--safety);color:var(--ink);font-weight:700}
 .start-here{border-left:4px solid var(--safety)}
 
-.quiz-cta{margin:12px 0 0}
-.quiz-cta a{font-weight:700}
+.quiz-button{display:inline-flex;align-items:center;gap:10px;margin:0 0 28px;padding:12px 18px;border:1px solid var(--safety);color:var(--safety);font-weight:700;text-decoration:none}
+.quiz-button:hover,.quiz-button:focus-visible{background:var(--safety);color:var(--ink)}
 .quiz-view{max-width:760px;margin:0 auto;padding:24px 0}
 .quiz-form{display:grid;gap:18px;margin-top:20px}
 .quiz-question{border:1px solid var(--line);padding:14px 16px;margin:0}
