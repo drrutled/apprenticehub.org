@@ -26,6 +26,8 @@ registerTrade({
   duration: "Usually about 3 years (hours and levels vary by province)",
   union: "Laborers' International Union of North America (LiUNA)",
   unionUrl: "https://www.liuna.org/",
+  profileUrl: "https://red-seal.ca/eng/trades/const-craft-work.shtml",
+  durationUrl: "https://www.jobbank.gc.ca/marketreport/requirements/8451/ca",
   jobSearch: "construction craft worker apprentice",
   journeySearch: "construction craft worker",
   aliases: "labourer laborer construction labourer general labourer site worker concrete forming pipe laying rigger signaller flagger civil construction demolition",

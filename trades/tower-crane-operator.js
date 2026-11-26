@@ -20,6 +20,8 @@ registerTrade({
   duration: "Varies by province, with training often built on construction, rigging, or crane experience",
   union: "International Union of Operating Engineers (IUOE)",
   unionUrl: "https://www.iuoe.org/",
+  profileUrl: "https://red-seal.ca/eng/trades/tower-crane-op.shtml",
+  durationUrl: "https://www.jobbank.gc.ca/marketreport/requirements/10422/ca",
   jobSearch: "tower crane operator",
   journeySearch: "tower crane operator",
   aliases: "tower crane hammerhead luffing jib self erecting high rise crane operator hoisting rigging signal person red seal construction",

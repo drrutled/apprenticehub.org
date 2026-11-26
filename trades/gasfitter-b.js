@@ -34,6 +34,8 @@ registerTrade({
   duration: "Usually shorter than Class A (varies by province)",
   union: "UA Canada (union) and provincial gas contractor associations",
   unionUrl: "https://www.uacanada.ca/",
+  profileUrl: "https://red-seal.ca/eng/trades/gasfitter_b/overview.shtml",
+  durationUrl: "https://www.jobbank.gc.ca/marketreport/requirements/16980/ca",
   jobSearch: "gasfitter class B apprentice",
   journeySearch: "gasfitter class B",
   aliases: "gas fitter class b residential gas technician furnace water heater fireplace range dryer propane natural gas b149",

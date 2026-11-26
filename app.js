@@ -64,7 +64,7 @@ const trades = [
 
 tradeCatalog.forEach((t) => {
   tradeInsights[t.id] = t.insight;
-  trades.push({ ...t, profileUrl: nationalResources.redSeal, durationUrl: nationalResources.redSeal });
+  trades.push({ ...t, profileUrl: t.profileUrl || nationalResources.redSeal, durationUrl: t.durationUrl || nationalResources.redSeal });
 });
 
 // Official Red Seal trade titles not yet covered by a guide.
@@ -209,7 +209,7 @@ function renderDetail(trade, section = "overview") {
   const jobQuery = encodeURIComponent(`${trade.jobSearch} ${province}`);
   const resources = [
     externalLink(nationalResources.provinces, "Find your provincial or territorial authority", `Select ${province} on the government directory to confirm local registration, training and certification.`),
-    externalLink(trade.unionUrl, trade.union, "Explore union training and apprenticeship information. Availability and entry steps vary by local."),
+    ...(trade.unionUrl ? [externalLink(trade.unionUrl, trade.union, "Explore union training and apprenticeship information. Availability and entry steps vary by local.")] : []),
     externalLink(nationalResources.buildingTrades, "Canada's Building Trades Unions", "Explore trades, apprenticeship pathways, and union / signatory-employer connections."),
     externalLink(trade.profileUrl, "Red Seal trade profile", "Explore the official occupational standard and tasks for this trade."),
     externalLink(trade.durationUrl, "Job Bank: training and requirements", "Review typical apprenticeship length and certification requirements."),

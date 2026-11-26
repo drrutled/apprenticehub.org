@@ -20,6 +20,8 @@ registerTrade({
   duration: "Usually about 3 years (varies by province)",
   union: "Canadian Nursery Landscape Association (CNLA)",
   unionUrl: "https://www.cnla-acpp.ca/",
+  profileUrl: "https://red-seal.ca/eng/trades/landscape-hort.shtml",
+  durationUrl: "https://www.jobbank.gc.ca/marketreport/requirements/27180/ca",
   jobSearch: "landscape horticulturist apprentice",
   journeySearch: "landscape horticulturist",
   aliases: "landscaper gardener horticulture turf arborist lawn nursery irrigation hardscape landscaping greenhouse red seal",

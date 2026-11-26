@@ -20,6 +20,8 @@
     duration: "Usually 3–4 years, varies by province",
     union: "Unifor",
     unionUrl: "https://www.unifor.org/",
+    profileUrl: "https://red-seal.ca/eng/trades/auto-body-col-tech.shtml",
+    durationUrl: "https://www.jobbank.gc.ca/marketreport/requirements/298170/ca",
     jobSearch: "auto body collision technician apprentice",
     journeySearch: "auto body collision technician",
     aliases: "auto body repair collision repair body shop bodyman panel beater autobody dent repair frame straightening red seal 310b",

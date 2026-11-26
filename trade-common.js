@@ -47,7 +47,7 @@ function registerTrade(def) {
   tradePacks[def.id] = pack;
   tradeCatalog.push({
     id: def.id, title: def.title, name: def.name, category: def.category, summary: def.summary, work: def.work,
-    duration: def.duration, union: def.union, unionUrl: def.unionUrl, jobSearch: def.jobSearch,
+    duration: def.duration, profileUrl: def.profileUrl, durationUrl: def.durationUrl, union: def.union, unionUrl: def.unionUrl, jobSearch: def.jobSearch,
     tools: def.tools, insight: def.insight, aliases: def.aliases || "", icon: def.icon || defaultTradeIcon
   });
 }
