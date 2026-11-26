@@ -12,7 +12,7 @@
   <meta name="twitter:card" content="summary">
   <link rel="canonical" href="https://apprenticehub.org/">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-  <link rel="stylesheet" href="/styles.css">
+  <link rel="stylesheet" href="/styles.css?v=rules1">
   <title>ApprenticeHub - Find your trade</title>
 </head>
 <body>
@@ -105,8 +105,9 @@
         <div class="tile-grid">
           <a class="tile" href="#browse-title"><strong>1. Browse trades</strong><span>Search the Red Seal list and open any guide, many with an intro video</span><span class="tile-arrow" aria-hidden="true">→</span></a>
           <a class="tile" href="https://red-seal.ca/eng/welcome.shtml" target="_blank" rel="noopener noreferrer"><strong>2. Check the official list</strong><span>Red Seal trade standards and requirements, maintained by the federal government</span><span class="tile-arrow" aria-hidden="true">↗</span></a>
-          <a class="tile" href="#about"><strong>3. Confirm locally</strong><span>Length, registration, and funding vary by province and employer</span><span class="tile-arrow" aria-hidden="true">→</span></a>
+          <button type="button" class="tile tile-button" id="rules-toggle" aria-expanded="false" aria-controls="rules-panel"><strong>3. Confirm locally</strong><span>Length, registration, and funding vary by province and employer</span><span class="tile-arrow" aria-hidden="true">↓</span></button>
         </div>
+        <section class="rules-panel" id="rules-panel" hidden></section>
       </section>
 
       <section class="next-step" id="about" aria-labelledby="about-title">
@@ -194,6 +195,6 @@
   <script src="/trades/transport-trailer-technician.js" defer></script>
   <script src="/trades/truck-transport-mechanic.js" defer></script>
   <script src="/trades/welder.js" defer></script>
-  <script src="/app.js?v=icons2" defer></script>
+  <script src="/app.js?v=rules1" defer></script>
 </body>
 </html>

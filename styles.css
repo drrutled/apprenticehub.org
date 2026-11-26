@@ -585,6 +585,15 @@ h1, h2, h3, p { margin-top: 0; }
 .tile-arrow { position: absolute; top: 18px; right: 16px; color: var(--safety); font-size: 18px; }
 .spotlight { padding: 12px 0 56px; }
 .spotlight .tile-grid { margin-bottom: 0; }
+.tile-button { width: 100%; font: inherit; color: inherit; text-align: left; cursor: pointer; }
+.rules-panel { margin-top: 16px; padding: 22px; border: 1px solid var(--line); border-left: 3px solid var(--safety); background: var(--panel-soft); }
+.rules-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.rules-head .eyebrow { margin: 0; }
+.rules-close { padding: 6px 12px; border: 1px solid var(--line); background: transparent; color: var(--paper); font-size: 12px; cursor: pointer; }
+.rules-close:hover, .rules-close:focus-visible { border-color: var(--safety); color: var(--safety); outline: none; }
+.rules-list, .rules-notes { margin: 12px 0; padding-left: 18px; line-height: 1.6; }
+.rules-list li, .rules-notes li { margin-bottom: 6px; }
+.rules-list a, .rules-notes a, .rules-panel .fine-print a { color: var(--safety); }
 
 .jump-chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 18px; }
 .jump-chips button { padding: 8px 13px; border: 1px solid var(--line); background: transparent; color: var(--paper); font-size: 12px; cursor: pointer; }
