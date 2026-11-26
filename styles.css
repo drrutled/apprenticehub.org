@@ -171,15 +171,27 @@ h1, h2, h3, p { margin-top: 0; }
   letter-spacing: .15em;
   text-transform: uppercase;
 }
-.hero-card-art {
-  display: flex;
-  min-height: 136px;
+.hero-path { display: grid; }
+.hero-path-link {
+  display: grid;
+  grid-template-columns: 42px minmax(0, 1fr) auto;
   align-items: center;
-  justify-content: center;
   gap: 15px;
-  color: var(--safety);
+  padding: 12px 0;
+  color: var(--paper);
+  text-decoration: none;
 }
-.hero-card-art svg { width: 70px; height: 70px; }
+.hero-path-link + .hero-path-link { border-top: 1px solid var(--line); }
+.hero-path-link svg { width: 42px; height: 42px; color: var(--safety); }
+.hero-path-link strong { display: block; font-size: 13px; }
+.hero-path-link small { display: block; margin-top: 4px; color: var(--muted); font-size: 11px; line-height: 1.4; }
+.hero-path-arrow { color: var(--safety); font-size: 19px; transition: transform .18s ease; }
+.hero-path-link:hover .hero-path-arrow, .hero-path-link:focus-visible .hero-path-arrow { transform: translateX(4px); }
+.hero-path-link:hover strong { color: var(--safety); }
+.hero-path-link:focus-visible { outline: 2px solid var(--safety); outline-offset: 3px; }
+#browse, #province-select, #start-here-title {
+  scroll-margin-top: calc(var(--header-h, 76px) + 16px);
+}
 .hero-card-footer {
   display: flex;
   align-items: center;
