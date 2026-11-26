@@ -9,6 +9,7 @@
   });
 
   registerTrade({
+    introVideo: { id: "zinlrEHKRE8", title: "Intro video: Auto Body Technician" },
     id: "auto-body-collision",
     store: "auto-body-collision",
     title: "Auto Body and Collision Technician",

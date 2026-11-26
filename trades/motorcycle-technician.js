@@ -9,6 +9,7 @@
   });
 
   registerTrade({
+    introVideo: { id: "Xc8w9xjA2mw", title: "Intro video: Motorcycle Technician" },
     id: "motorcycle-technician",
     store: "motorcycle-technician",
     title: "Motorcycle Technician",

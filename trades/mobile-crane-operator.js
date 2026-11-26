@@ -9,6 +9,7 @@ const mcBank = (rows, off) => rows.map(([q, right, wrong, explain], i) => {
 });
 
 registerTrade({
+  introVideo: { id: "P0Eag_LDFZ4", title: "Intro video: Mobile Crane Operator" },
   id: "mobile-crane-operator",
   store: "mobile-crane-operator",
   title: "Mobile Crane Operator",
