@@ -12,6 +12,7 @@
   const yt = (s) => `https://www.youtube.com/results?search_query=${s}`;
 
   registerTrade({
+    introVideo: { id: "D5c-zXGqCME", title: "Intro video: Industrial Electrician" },
     id: "industrial-electrician",
     store: "industrial-electrician",
     title: "Industrial Electrician",

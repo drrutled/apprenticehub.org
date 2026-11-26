@@ -314,6 +314,7 @@
   ];
 
   registerTrade({
+    introVideo: { id: "nfz-iVuMBdQ", title: "Intro video: Transport Trailer Technician" },
     id: "transport-trailer-technician",
     store: "transport-trailer-technician",
     title: "Transport Trailer Technician",

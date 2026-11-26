@@ -9,6 +9,7 @@
   });
 
   registerTrade({
+    introVideo: { id: "HLJrXX-IaJM", title: "Intro video: Automotive Refinishing" },
     id: "automotive-refinishing",
     store: "automotive-refinishing",
     title: "Automotive Refinishing Technician",

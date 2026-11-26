@@ -588,6 +588,7 @@ function useTrade(id) {
 
 tradePacks["sheet-metal"] = {
   id: "sheet-metal", store: "smw", name: "Sheet Metal Worker", short: "sheet metal",
+  introVideo: { id: "DzJVulYBRJA", title: "Intro video: Sheet Metal Worker" },
   sections: sheetMetalSections, toolGroups, mediaGroups, practiceBank, roadmapSteps, glossary,
   reference: smReference,
   cards: [
