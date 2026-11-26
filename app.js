@@ -62,7 +62,12 @@ const trades = [
   }
 ];
 
-// Official Red Seal trade titles not yet covered by a pilot guide.
+tradeCatalog.forEach((t) => {
+  tradeInsights[t.id] = t.insight;
+  trades.push({ ...t, profileUrl: nationalResources.redSeal, durationUrl: nationalResources.redSeal });
+});
+
+// Official Red Seal trade titles not yet covered by a guide.
 const upcomingTrades = [
   "Agricultural Equipment Technician",
   "Appliance Service Technician",
@@ -133,9 +138,9 @@ function externalLink(url, label, description) {
 function renderTrades() {
   const query = searchInput.value.trim().toLowerCase();
   const matches = trades.filter((trade) =>
-    `${trade.name} ${trade.category} ${trade.summary} ${trade.id === "plumbing" ? "plumber" : ""} ${trade.id === "electrician" ? "construction electrician" : ""}`.toLowerCase().includes(query)
+    `${trade.name} ${trade.category} ${trade.summary} ${trade.id === "plumbing" ? "plumber" : ""} ${trade.id === "electrician" ? "construction electrician" : ""} ${trade.title || ""} ${trade.aliases || ""}`.toLowerCase().includes(query)
   );
-  const upcoming = upcomingTrades.filter((name) => name.toLowerCase().includes(query));
+  const upcoming = upcomingTrades.filter((name) => !tradeCatalog.some((t) => t.title === name) && name.toLowerCase().includes(query));
   const count = matches.length + upcoming.length;
   resultCount.textContent = `${count} ${count === 1 ? "trade" : "trades"}`;
 
@@ -146,7 +151,7 @@ function renderTrades() {
 
   const pilotCards = matches.map((trade) => `
     <a class="trade-card" href="#trade/${trade.id}" aria-label="Open the ${trade.name} guide">
-      <span class="card-top"><span class="trade-art">${trade.icon}</span><span class="available-tag">Pilot guide</span></span>
+      <span class="card-top"><span class="trade-art">${trade.icon}</span><span class="available-tag">Full guide</span></span>
       <h3>${trade.name}</h3>
       <p>${trade.summary}</p>
       <span class="card-link"><span>${trade.category}</span><span aria-hidden="true">→</span></span>
@@ -215,7 +220,7 @@ function renderDetail(trade, section = "overview") {
   detailContent.innerHTML = `
     <div class="detail-hero">
       <div>
-        <p class="eyebrow">Pilot trade guide · ${trade.category}</p>
+        <p class="eyebrow">Trade guide · ${trade.category}</p>
         <h1 id="detail-title" tabindex="-1">${trade.name}</h1>
         <p>${trade.summary}</p>
       </div>

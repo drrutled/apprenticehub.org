@@ -574,6 +574,7 @@ function bindSheetMetalSection(section, root) {
 
 
 const tradePacks = {};
+const tradeCatalog = [];
 let P = null;
 
 function useTrade(id) {
