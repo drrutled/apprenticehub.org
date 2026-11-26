@@ -287,6 +287,18 @@ function renderDetail(trade, section = "overview") {
 }
 
 function showCurrentRoute() {
+  const quizView = document.getElementById("quiz-view");
+  if (window.location.hash === "#quiz") {
+    homeView.hidden = true;
+    detailView.hidden = true;
+    quizView.hidden = false;
+    renderQuiz();
+    document.title = "ApprenticeHub - Find your trade quiz";
+    window.scrollTo(0, 0);
+    document.getElementById("quiz-title").focus({ preventScroll: true });
+    return;
+  }
+  quizView.hidden = true;
   const { trade, section } = parseRoute();
 
   if (trade) {
