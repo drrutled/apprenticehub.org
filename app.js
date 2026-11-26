@@ -331,6 +331,68 @@ provinceSelect.addEventListener("change", () => {
   const { trade, section } = parseRoute();
   if (trade) renderDetail(trade, section);
 });
+const provincialRules = {
+  "Alberta": { authority: "Apprenticeship and Industry Training (Alberta)", safety: "Alberta Occupational Health and Safety", comp: ["WCB Alberta", "https://www.wcb.ab.ca"], notes: [] },
+  "British Columbia": { authority: "SkilledTradesBC", url: "https://skilledtradesbc.ca", safety: "WorkSafeBC", safetyUrl: "https://www.worksafebc.com", notes: ["Register through the SkilledTradesBC Portal. Your employer sponsor also needs an account to confirm your registration.", "Your SkilledTradesBC ID stays with you for the whole apprenticeship. You need it for school and for EI."] },
+  "Manitoba": { authority: "Apprenticeship Manitoba", safety: "Manitoba Workplace Safety and Health (SAFE Work Manitoba)", comp: ["Workers Compensation Board of Manitoba", null], notes: [] },
+  "New Brunswick": { authority: "Skilled Trades NB (Apprenticeship and Occupational Certification)", safety: "WorkSafeNB", notes: [] },
+  "Newfoundland and Labrador": { authority: "Apprenticeship and Trades Certification", safety: "WorkplaceNL", notes: [] },
+  "Northwest Territories": { authority: "Apprenticeship, Trade and Occupation Certification (ATOC) Program", safety: "WSCC (shared with Nunavut)", notes: [] },
+  "Nova Scotia": { authority: "Nova Scotia Apprenticeship Agency", safety: "Nova Scotia occupational health and safety program and provincial workers' compensation board", notes: [] },
+  "Nunavut": { authority: "Apprenticeship, Trade and Occupations Certification", safety: "WSCC (shared with the Northwest Territories)", notes: [] },
+  "Ontario": { authority: "Skilled Trades Ontario", url: "https://www.skilledtradesontario.ca", safety: "Ministry of Labour (Occupational Health and Safety Act)", comp: ["WSIB", "https://www.wsib.ca"], notes: ["Compulsory trades need a Certificate of Qualification, a provisional certificate, or a registered training agreement before you can work in them.", "Employers can check the Skilled Trades Ontario Public Register to confirm a worker is authorized in a compulsory trade."] },
+  "Prince Edward Island": { authority: "Provincial apprenticeship office (see the directory link below)", safety: "WorkSafePEI", notes: [] },
+  "Quebec": { authority: "Commission de la construction du Québec (CCQ) for construction trades", url: "https://www.ccq.org", safety: "CNESST (health and safety and workers' compensation)", safetyUrl: "https://www.cnesst.gouv.qc.ca", notes: ["Construction apprentices need an apprentice competency certificate (CCA) from the CCQ.", "Complete the 'Santé et sécurité générale sur les chantiers de construction' course before you apply for a CCA."] },
+  "Saskatchewan": { authority: "Saskatchewan Apprenticeship and Trade Certification Commission (SATCC)", safety: "Saskatchewan Occupational Health and Safety", comp: ["Saskatchewan Workers' Compensation Board", null], notes: [] },
+  "Yukon": { authority: "Provincial apprenticeship office (see the directory link below)", safety: "Yukon Workers' Compensation Health and Safety Board", notes: [] }
+};
+
+const rulesToggle = document.getElementById("rules-toggle");
+const rulesPanel = document.getElementById("rules-panel");
+
+function linkOrText(label, url) {
+  return url ? `<a href="${url}" target="_blank" rel="noopener noreferrer">${label} ↗</a>` : label;
+}
+
+function renderRules() {
+  const province = provinceSelect.value;
+  const rules = provincialRules[province];
+  const authorityLink = linkOrText(rules.authority, rules.url || nationalResources.provinces);
+  const safetyLink = linkOrText(rules.safety, rules.safetyUrl);
+  const compLink = rules.comp ? `<li><strong>Workers' compensation:</strong> ${linkOrText(rules.comp[0], rules.comp[1])}</li>` : "";
+  const notes = rules.notes.length ? `<ul class="rules-notes">${rules.notes.map((note) => `<li>${note}</li>`).join("")}</ul>` : "";
+  rulesPanel.innerHTML = `
+    <div class="rules-head"><p class="eyebrow">Rules for ${province}</p><button type="button" class="rules-close" id="rules-close" aria-label="Close rules">Close</button></div>
+    <ul class="rules-list">
+      <li><strong>Apprenticeship authority:</strong> ${authorityLink}</li>
+      <li><strong>Workplace safety:</strong> ${safetyLink}</li>
+      ${compLink}
+    </ul>
+    ${notes}
+    <p class="fine-print">Rules change. Confirm current requirements with the authorities above. For a full list of provincial and territorial authorities, see <a href="${nationalResources.provinces}" target="_blank" rel="noopener noreferrer">the federal directory ↗</a>.</p>`;
+  document.getElementById("rules-close").addEventListener("click", closeRules);
+}
+
+function closeRules() {
+  rulesPanel.hidden = true;
+  rulesToggle.setAttribute("aria-expanded", "false");
+}
+
+rulesToggle.addEventListener("click", () => {
+  const opening = rulesPanel.hidden;
+  if (opening) {
+    renderRules();
+    rulesPanel.hidden = false;
+    rulesToggle.setAttribute("aria-expanded", "true");
+    rulesPanel.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  } else {
+    closeRules();
+  }
+});
+provinceSelect.addEventListener("change", () => {
+  if (!rulesPanel.hidden) renderRules();
+});
+
 window.addEventListener("hashchange", showCurrentRoute);
 
 const headerEl = document.querySelector(".site-header");
